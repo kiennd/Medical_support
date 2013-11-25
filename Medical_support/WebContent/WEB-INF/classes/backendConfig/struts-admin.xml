@@ -9,11 +9,11 @@
 			<result>index.jsp</result>
 		</action>
 
-		<action name="login" class="control.backend.LoginAction" method="execute">
+		<action name="login" class="BackendAction.LoginAction" method="execute">
 			<result name="success">index.jsp</result>
 			<result name="input">login.jsp</result>
 		</action>
-		<action name="logout" class="control.backend.LogoutAction" method="execute">
+		<action name="logout" class="BackendAction.LoginAction" method="logout">
 			<result name="success">login.jsp</result>
 		</action>
 	</package>

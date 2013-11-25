@@ -7,7 +7,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import DAO.UserDAO;
 import Model.User;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class LoginAction extends ActionSupport implements SessionAware{
@@ -30,7 +29,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 	}
 	
 	public String logout() throws Exception {
-		Map<String,Object> session = ActionContext.getContext().getSession();
+//		Map<String,Object> session = ActionContext.getContext().getSession();
 		session.remove("user");
 		return SUCCESS;
 	}

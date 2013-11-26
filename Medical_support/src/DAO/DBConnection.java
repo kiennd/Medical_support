@@ -11,7 +11,7 @@ public class DBConnection {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/benhan?characterEncoding=UTF-8", "root", "");
+					"jdbc:mysql://localhost:3306/benhan?characterEncoding=UTF-8", "root", " ");
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

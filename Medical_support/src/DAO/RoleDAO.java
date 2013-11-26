@@ -11,7 +11,6 @@ import Model.Role;
 public class RoleDAO {
 	Connection conn;
 
-
 	public Vector<Role> findRole(String name) {
 		conn = DBConnection.getConn();
 		StringBuffer query = new StringBuffer("select * from tblrole ");

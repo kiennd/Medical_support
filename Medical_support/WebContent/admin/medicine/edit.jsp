@@ -9,12 +9,6 @@
 <head>
 <s:include value="../head.jsp"></s:include>
 </head>
-<%
-	if (request.getAttribute("roles") == null) {
-		String redirectURL = "index";
-		response.sendRedirect(redirectURL);
-	}
-%>
 
 <body>
 	<div id="body-wrapper">
@@ -39,20 +33,17 @@
 					<form action="save" method="post">
 						<s:hidden name="medicineBean.id"></s:hidden>
 						<p>
-							<s:textfield name="medicineBean.name" key="Username"
+							<s:textfield name="medicineBean.name" key="Medicine Name"
 								cssClass="text-input medium-input"></s:textfield>
 						</p>
 						<p>
-							<s:textfield name="medicineBean.description" key="Full name"
+							<s:textfield name="medicineBean.description" key="Medicine Description"
 								cssClass="text-input medium-input"></s:textfield>
 						</p>
 						
 						<p>
 							<input class="button" type="submit" value="Submit"></input>
 						</p>
-
-
-
 
 					</form>
 

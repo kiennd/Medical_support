@@ -7,35 +7,33 @@ import Model.*;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class MedicineAction extends ActionSupport {
+public class PatientAction extends ActionSupport {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7426685351940185926L;
-	private Medicine medicineBean;
+	private Patient patientBean;
 	private int page, totalPage, startIndex, endIndex;
 	private static final int ITEM_PER_PAGE = 20;
-	private Vector<Medicine> medicines;
+	private Vector<Patient> patients;
 	private String name = "";
-	private int id;
+	private String id = "";
 	private Vector<String> selection = new Vector<String>();
 
-	
-
 	public String indexAction() {
-		medicines = new Vector<>();
-		MedicineDAO md = new MedicineDAO();
-		medicines = md.findMedicine(name);
+		patients = new Vector<>();
+		PatientDAO md = new PatientDAO();
+		patients = md.findPatient(name);
 		
-		int size = this.medicines.size();
+		int size = this.patients.size();
 		
 		if (size == 0) {
 			endIndex = -1;
 			return SUCCESS;
 		}
 		totalPage = size / ITEM_PER_PAGE;
-		if (totalPage * ITEM_PER_PAGE < medicines.size()) {
+		if (totalPage * ITEM_PER_PAGE < patients.size()) {
 			totalPage++;
 		}
 		System.out.println("totalPage:" + totalPage);
@@ -53,40 +51,40 @@ public class MedicineAction extends ActionSupport {
 
 	
 	public String edit() {
-		MedicineDAO md = new MedicineDAO();
-		medicineBean = md.getMedicine(id);
-		if (medicineBean != null)
+		PatientDAO md = new PatientDAO();
+		patientBean = md.getPatient(id);
+		if (patientBean != null)
 			return SUCCESS;
 		return ERROR;
 	}
 	public String save() {
-		MedicineDAO md = new MedicineDAO();
-		if(md.updateMedicine(medicineBean)){
+		PatientDAO md = new PatientDAO();
+		if(md.updatePatient(patientBean)){
 			return SUCCESS;		
 		}else{
-			System.out.println("update medicine error");
+			System.out.println("update patient error");
 			return ERROR;
 		}
 		
 	}
 	public String newAction() {
-		if(medicineBean==null){
+		if(patientBean==null){
 			return ERROR;
 		}
-		MedicineDAO md = new MedicineDAO();
-		if(md.newMedicine(medicineBean)){
+		PatientDAO md = new PatientDAO();
+		if(md.newPatient(patientBean)){
 			return SUCCESS;		
 		}else{
-			System.out.println("new medicine error");
+			System.out.println("new patient error");
 			return ERROR;
 		}
 
 	}
 	public String delete() {
-		MedicineDAO md = new MedicineDAO();
+		PatientDAO md = new PatientDAO();
 
-		if (id!= 0) {
-			if(md.deleteMedicine(id)){
+		if (id.length() > 0) {
+			if(md.deletePatient(id)){
 				addActionMessage("Item #" + id + " was deleted !");
 				return SUCCESS;
 			}else{
@@ -94,7 +92,7 @@ public class MedicineAction extends ActionSupport {
 			}
 		} else {
 			for (String s : selection) {
-				if (md.deleteMedicine(Integer.parseInt(s))){
+				if (md.deletePatient(s)){
 					addActionMessage("Item #" + s + " was deleted !");
 				}else{
 					return ERROR;
@@ -111,74 +109,92 @@ public class MedicineAction extends ActionSupport {
 			selection.add(select[i]);
 		}
 	}
-	
-	public Medicine getMedicineBean() {
-		return medicineBean;
+
+
+	public Patient getPatientBean() {
+		return patientBean;
 	}
 
-	public void setMedicineBean(Medicine medicineBean) {
-		this.medicineBean = medicineBean;
+
+	public void setPatientBean(Patient patientBean) {
+		this.patientBean = patientBean;
 	}
+
 
 	public int getPage() {
 		return page;
 	}
 
+
 	public void setPage(int page) {
 		this.page = page;
 	}
+
 
 	public int getTotalPage() {
 		return totalPage;
 	}
 
+
 	public void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
 	}
+
 
 	public int getStartIndex() {
 		return startIndex;
 	}
 
+
 	public void setStartIndex(int startIndex) {
 		this.startIndex = startIndex;
 	}
+
 
 	public int getEndIndex() {
 		return endIndex;
 	}
 
+
 	public void setEndIndex(int endIndex) {
 		this.endIndex = endIndex;
 	}
 
-	public Vector<Medicine> getMedicines() {
-		return medicines;
+
+	public Vector<Patient> getPatients() {
+		return patients;
 	}
 
-	public void setMedicines(Vector<Medicine> medicines) {
-		this.medicines = medicines;
+
+	public void setPatients(Vector<Patient> patients) {
+		this.patients = patients;
 	}
+
 
 	public String getName() {
 		return name;
 	}
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public int getId() {
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+
+	public void setId(String id) {
 		this.id = id;
 	}
+
 
 	public Vector<String> getSelection() {
 		return selection;
 	}
+
 
 	public void setSelection(Vector<String> selection) {
 		this.selection = selection;
@@ -186,5 +202,4 @@ public class MedicineAction extends ActionSupport {
 	
 	
 
-	
 }

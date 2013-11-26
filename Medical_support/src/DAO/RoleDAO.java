@@ -110,7 +110,7 @@ public class RoleDAO {
 		conn = DBConnection.getConn();
 
 		try {
-			String query = "delete from tblUser where roleid = " + id;
+			String query = "delete from tblRole where roleid = " + id;
 
 			PreparedStatement pr = conn.prepareStatement(query);
 			if (pr.execute()) {

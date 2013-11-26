@@ -10,7 +10,7 @@
 
 <s:include value="../head.jsp"></s:include>
 <%
-	if (request.getAttribute("medicines") == null) {
+	if (request.getAttribute("patients") == null) {
 		String redirectURL = "index";
 		response.sendRedirect(redirectURL);
 	}
@@ -31,7 +31,7 @@
 				<!-- Start Content Box -->
 				<div class="content-box-header">
 					<h3>Content box</h3>
-					<a href="<%=request.getContextPath()%>/admin/medicine/new" class="button"
+					<a href="<%=request.getContextPath()%>/admin/patient/new" class="button"
 						style="margin-left: 70%; margin-top: 5px">New User</a>
 				</div>
 
@@ -54,25 +54,32 @@
 									<th><input class="check-all" type="checkbox" /></th>
 									<th>#</th>
 									<th>Name</th>
-									<th>Description</th>
+									<th>Born Year</th>
+									<th>Sex</th>
 									<th>Modification</th>
 								</tr>
 							</thead>
 							<tbody>
-								<s:iterator value="medicines" begin="startIndex"
+								<s:iterator value="patients" begin="startIndex"
 									end="endIndex" status="stat">
 									<tr>
 										<td><input type="checkbox" name="slelect"
 											value=<s:property value = "id"/>></td>
 										<td>${id}</td>
 										<td>${name}</td>
-										<td>${description}</td>
+										<td>${bornYear}</td>
+										<s:if test="%{sex}">
+											<td>Nam</td>
+										</s:if>
+										<s:else>
+											<td>Nữ</td>
+										</s:else>
 										<td>
 											<!-- Icons --> <a
-											href="<%=request.getContextPath()%>/admin/medicine/edit?id=${id}"
+											href="<%=request.getContextPath()%>/admin/patient/edit?id=${id}"
 											title="Edit"><img
 												src="../resources/images/icons/pencil.png" alt="Edit" /></a> <a
-											href="<%=request.getContextPath()%>/admin/medicine/delete?id=${id}"
+											href="<%=request.getContextPath()%>/admin/patient/delete?id=${id}"
 											title="Delete"><img
 												src="../resources/images/icons/cross.png" alt="Delete" /></a>
 										</td>

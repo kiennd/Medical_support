@@ -8,8 +8,16 @@ public class Patient implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 8449432668260383250L;
-	private String name,id,bornYear;
-	private int sex;
+	private String name,id;
+	private int sex,bornYear;
+	
+	
+	public int getBornYear() {
+		return bornYear;
+	}
+	public void setBornYear(int bornYear) {
+		this.bornYear = bornYear;
+	}
 	public String getName() {
 		return name;
 	}
@@ -22,12 +30,7 @@ public class Patient implements Serializable{
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getBornYear() {
-		return bornYear;
-	}
-	public void setBornYear(String bornYear) {
-		this.bornYear = bornYear;
-	}
+
 	public int getSex() {
 		return sex;
 	}

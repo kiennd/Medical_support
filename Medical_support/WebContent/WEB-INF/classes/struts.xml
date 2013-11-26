@@ -9,4 +9,6 @@
 	<include file="backendConfig/struts-user.xml"></include>
 	<include file="backendConfig/struts-role.xml"></include>
 	<include file="backendConfig/struts-medicine.xml"></include>
+	<include file="backendConfig/struts-patient.xml"></include>
+	
 </struts>

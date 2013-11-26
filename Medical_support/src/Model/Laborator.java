@@ -28,5 +28,4 @@ public class Laborator implements Serializable {
 	public void setNormalValue(float normalValue) {
 		this.normalValue = normalValue;
 	}
-	
 }

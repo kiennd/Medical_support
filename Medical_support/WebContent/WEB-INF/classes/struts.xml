@@ -6,4 +6,7 @@
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
 	<include file="backendConfig/struts-admin.xml"></include>
+	<include file="backendConfig/struts-user.xml"></include>
+	<include file="backendConfig/struts-role.xml"></include>
+	<include file="backendConfig/struts-medicine.xml"></include>
 </struts>

@@ -10,7 +10,7 @@ public class LaboratorForm implements Serializable {
 	 */
 	private static final long serialVersionUID = 5526078621361372253L;
 	private Patient pantient;
-	private Vector<Medicine> medicines;
+	private Vector<MedicineForm> medicines;
 	private Vector<Laborator> laborators;
 	private String result;
 	private int count,id;
@@ -28,10 +28,10 @@ public class LaboratorForm implements Serializable {
 	public void setPantient(Patient pantient) {
 		this.pantient = pantient;
 	}
-	public Vector<Medicine> getMedicines() {
+	public Vector<MedicineForm> getMedicines() {
 		return medicines;
 	}
-	public void setMedicines(Vector<Medicine> medicines) {
+	public void setMedicines(Vector<MedicineForm> medicines) {
 		this.medicines = medicines;
 	}
 	public String getResult() {

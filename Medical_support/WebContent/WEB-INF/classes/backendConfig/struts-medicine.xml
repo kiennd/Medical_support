@@ -3,8 +3,8 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="user" namespace="/admin/user" extends="struts-default">
-		<action name="index" class="BackendAction.UserAction" method="execute">
+	<package name="medicine" namespace="/admin/medicine" extends="struts-default">
+		<action name="index" class="BackendAction.MedicineAction" method="indexAction">
 			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="store">
 				<param name="operationMode">RETRIEVE</param>
@@ -12,11 +12,11 @@
 			<result name="success">index.jsp</result>
 		</action>
 
-		<action name="edit" class="BackendAction.UserAction" method="edit">
+		<action name="edit" class="BackendAction.MedicineAction" method="edit">
 			<result name="success">edit.jsp</result>
 		</action>
 
-		<action name="save" class="BackendAction.UserAction" method="saveUser">
+		<action name="save" class="BackendAction.MedicineAction" method="save">
 			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
@@ -24,7 +24,7 @@
 			<result name="success" type="redirectAction">index</result>
 		</action>
 
-		<action name="delete" class="BackendAction.UserAction" method="deleteUser">
+		<action name="delete" class="BackendAction.MedicineAction" method="delete">
 			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
@@ -33,7 +33,7 @@
 			<result name="error">new.jsp</result>
 		</action>
 		
-		<action name="new" class="BackendAction.UserAction" method="newUser">
+		<action name="new" class="BackendAction.MedicineAction" method="newAction">
 			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>

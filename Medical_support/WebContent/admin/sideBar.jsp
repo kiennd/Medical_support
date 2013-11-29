@@ -17,7 +17,7 @@
 			name = user.getUsername();
 		}
 	%>
-
+ 
 	<div id="sidebar-wrapper">
 		<!-- Sidebar with logo and menu -->
 

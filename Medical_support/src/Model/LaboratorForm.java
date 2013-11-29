@@ -1,7 +1,6 @@
 package Model;
 
 import java.io.Serializable;
-import java.util.Vector;
 
 public class LaboratorForm implements Serializable {
 	

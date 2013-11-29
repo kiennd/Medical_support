@@ -16,30 +16,6 @@
 	}
 %> --%>
 
-<%
-	Patient currentPatient = (Patient) request
-			.getAttribute("currentPatient");
-%>
-<script type="text/javascript">
-
-$(document).ready(function() {
-    $('.editable_tf').editable('http://localhost:8080/Medical_support/admin/laborator/saveLaborator', { 
-    	indicator : "<img src='../resources/images/indicator.gif'>",
-		id:'laboratorName',
-		name:'laboratorValue',
-		 submitdata : function(value, settings) {
-		       return {patientid: "<%=currentPatient.getId()%>",
-		    			count:"<%=request.getAttribute("count")%>"   
-		       };
-		 },
-        select : true,
-        submit : 'Save',
-        cancel : 'Cancel',
-        tooltip : 'Click to edit'
-    });
-});
-
-</script>
 </head>
 
 
@@ -52,45 +28,10 @@ $(document).ready(function() {
 			<%@include file="../searchForm.jsp"%>
 			<div class="clear"></div>
 			<!-- End .clear -->
-			<p>
-			<table>
-				<tr>
-					<th>Patient ID</th>
-					<th><%=currentPatient.getId()%></th>
-				</tr>
-				<tr>
-					<th>Patient Name</th>
-					<th><%=currentPatient.getName()%></th>
-				</tr>
-				<tr>
-					<th>Born year</th>
-					<th><%=currentPatient.getBornYear()%></th>
-				</tr>
-				<tr>
-					<th>Born year</th>
-					<%
-						if (currentPatient.getSex() == 1) {
-					%>
-					<th>Nam</th>
-					<%
-						} else {
-					%>
-					<th>Nữ</th>
-					<%
-						}
-					%>
-				</tr>
-
-			</table>
-
-			<p>
 			<div class="content-box">
 				<!-- Start Content Box -->
 				<div class="content-box-header">
-					<h3>Content box</h3>
-					<a href="<%=request.getContextPath()%>/admin/laboratorForm/new"
-						class="button" style="margin-left: 70%; margin-top: 5px">New
-						User</a>
+					<h3>Medical support system</h3>
 				</div>
 
 				<div class="tab-content">
@@ -105,7 +46,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 					</s:if>
-					<s:form action="delete" id="form1">
+					<s:form action="detect" id="form1">
 						<table>
 							<thead>
 								<tr>
@@ -117,16 +58,25 @@ $(document).ready(function() {
 								<%
 									Vector<Laborator> laborators = (Vector<Laborator>) request
 												.getAttribute("laborators");
-
 										for (Laborator laborator : laborators) {
 								%>
 								<tr>
+									
 									<th><%=laborator.getName()%></th>
-									<th class = "editable_tf" id="<%=laborator.getName()%>"><%=laborator.getResult()%></th>
+									<th class = "editable_tf">
+										<input type = "hidden" name="laboratorName" value = "<%=laborator.getName()%>">
+										<input type = "text" name="laboratorValue">
+									</th>
 								</tr>
 								<%
 									}
 								%>
+								
+								<tr>
+									
+									<th><input type = "submit" value = "submit"></th>
+									
+								</tr>
 							</tbody>
 							<%-- <tfoot>
 								<%@include file = "../tableFooter.jsp" %>

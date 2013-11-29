@@ -82,6 +82,11 @@
 											href="<%=request.getContextPath()%>/admin/patient/delete?id=${id}"
 											title="Delete"><img
 												src="../resources/images/icons/cross.png" alt="Delete" /></a>
+											<a
+											href="<%=request.getContextPath()%>/admin/laborator/newLaboratorForm?patientid=${id}"
+											title="Add new laborator form"><img
+												src="../resources/images/icons/Hospital.png" alt="Add new laborator form" /></a>
+											
 										</td>
 									</tr>
 								</s:iterator>

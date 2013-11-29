@@ -18,11 +18,26 @@
 		<action name="saveLaborator" class="BackendAction.LaboratorAction" method="saveLaborator">
 			<result name="success">aftersave.jsp</result>
 		</action>
-
-		<!-- <action name="edit" class="BackendAction.LaboratorAction" method="edit">
+		
+		<action name="edit" class="BackendAction.LaboratorAction" method="viewLaboratorForm">
 			<result name="success">edit.jsp</result>
 		</action>
 
+		<action name="saveLaboratorForm" class="BackendAction.LaboratorAction" method="saveLaboratorForm">
+			<result name="success">index.jsp</result>
+		</action>
+		
+		<action name="newLaboratorForm"  class="BackendAction.LaboratorAction">
+			<result>new.jsp</result>
+		</action>
+		
+		<action name="saveNewLaboratorForm" class="BackendAction.LaboratorAction" method="saveNewLaboratorForm">
+			<result>index.jsp</result>
+		</action>
+		
+		
+		
+		<!-- 
 		<action name="save" class="BackendAction.LaboratorAction" method="save">
 			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="store">

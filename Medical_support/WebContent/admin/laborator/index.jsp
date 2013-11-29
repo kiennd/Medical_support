@@ -14,6 +14,7 @@
 	if (request.getAttribute("laboratorForms") == null) {
 		String redirectURL = "index";
 		response.sendRedirect(redirectURL);
+		return;
 	}
 %>
 </head>
@@ -82,7 +83,7 @@
 									<td><%=laboratorForm.getResult()%></td>
 									<td>
 										<!-- Icons --> <a
-										href="<%=request.getContextPath()%>/admin/laborator/edit?id=<%=laboratorForm.getId()%>"
+										href="<%=request.getContextPath()%>/admin/laborator/edit?patientid=<%=laboratorForm.getPantient().getId()%>&count=<%=laboratorForm.getCount() %>"
 										title="Edit"><img
 											src="../resources/images/icons/pencil.png" alt="Edit" /></a> <a
 										href="<%=request.getContextPath()%>/admin/laborator/delete?id=<%=laboratorForm.getId()%>"

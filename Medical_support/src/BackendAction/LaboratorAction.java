@@ -20,13 +20,14 @@ public class LaboratorAction extends ActionSupport {
 	private String patientid;
 	int count;
 	private String laboratorName;
-	private float laboratorValue;
+	private String laboratorValue;
 	private String searchKey = "";
 	private Vector<LaboratorForm> laboratorForms; 
 	private int page, totalPage, startIndex, endIndex;
 	private static final int ITEM_PER_PAGE = 20;
 	
 	private Vector<Laborator> laborators;
+	private LaboratorForm laboratorFormBean;
 	private Patient currentPatient;
 	public String addPatient(){
 		
@@ -58,6 +59,7 @@ public class LaboratorAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	
 	public String detailAction(){
 		LaboratorDAO ld = new LaboratorDAO();
 		this.laborators = ld.getLaborators(patientid, count);
@@ -75,6 +77,36 @@ public class LaboratorAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	public String viewLaboratorForm(){
+		LaboratorDAO ld = new LaboratorDAO();
+		laboratorFormBean = ld.getLaboratorForm(patientid, count);
+		return SUCCESS;
+	}
+	
+	public String saveLaboratorForm(){
+		LaboratorDAO ld = new LaboratorDAO();
+		ld.saveLaboratorForm(laboratorFormBean);
+		return SUCCESS;
+	}
+	
+	public String saveNewLaboratorForm(){
+		LaboratorDAO ld = new LaboratorDAO();
+		
+		ld.saveNewLaboratorForm(laboratorFormBean);
+		
+		return SUCCESS;
+		
+	}
+	
+	
+	public LaboratorForm getLaboratorFormBean() {
+		return laboratorFormBean;
+	}
+
+	public void setLaboratorFormBean(LaboratorForm laboratorFormBean) {
+		this.laboratorFormBean = laboratorFormBean;
+	}
+
 	public Patient getCurrentPatient() {
 		return currentPatient;
 	}
@@ -163,12 +195,16 @@ public class LaboratorAction extends ActionSupport {
 		this.laboratorName = laboratorName;
 	}
 
-	public float getLaboratorValue() {
-		return laboratorValue;
+	public String getLaboratorValue() {
+		return laboratorValue+"";
 	}
 
-	public void setLaboratorValue(float laboratorValue) {
-		this.laboratorValue = laboratorValue;
+	public void setLaboratorValue(String laboratorValue) {
+		if(Float.isNaN(Float.parseFloat(laboratorValue))|| laboratorValue==null){
+			laboratorValue = null;
+		}else{
+			this.laboratorValue = laboratorValue;
+		}
 	}
 	
 	

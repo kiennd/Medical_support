@@ -93,6 +93,31 @@ public class LaboratorDAO {
 		return laborators;
 	}
 	
+	public LaboratorForm getLaboratorForm(String patientid, int count){
+		String query = "select * from tbllaboratorform where patientid = ? and count = ?";
+		PreparedStatement pr;
+		LaboratorForm r = new LaboratorForm();
+		try {
+			pr = conn.prepareStatement(query);
+			pr.setString(1, patientid);
+			pr.setInt(2, count);
+			
+			ResultSet rs = pr.executeQuery();
+			if(rs.next()){				
+				PatientDAO pd = new PatientDAO();
+				Patient p = pd.getPatient(rs.getString("patientid"));
+				
+				r.setId(rs.getInt("id"));
+				r.setPantient(p);
+				r.setResult(rs.getString("result"));
+				r.setCount(rs.getInt("count"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return r;
+	}
+	
 	public int getCount(){
 		String query = "select count(*) as c from tbllaborator";
 		PreparedStatement pr;
@@ -109,7 +134,54 @@ public class LaboratorDAO {
 		return count;
 	}
 	
-	public boolean saveLaborator(String patientid,int count,float value, String laboratorName){
+	public boolean saveLaboratorForm(LaboratorForm laboratorform){
+		String query = "update tbllaboratorform set result = '"+laboratorform.getResult()+"' where patientid="+laboratorform.getPantient().getId()+""
+				+ " and count = "+ laboratorform.getCount()+"";
+		try {
+			Statement st = conn.createStatement();
+			return !st.execute(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean saveNewLaboratorForm(LaboratorForm laboratorform){
+		
+		int count=0;
+		
+		try {
+			String query = "select count(*) as a from tbllaboratorform where patientid = "+laboratorform.getPantient().getId();
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			if(rs.next()){
+				count = rs.getInt("a");
+			}
+			
+			query = "insert into tbllaboratorform (patientid,count,result) values(?,?,?)";
+			PreparedStatement pr = conn.prepareStatement(query);
+			pr.setString(1, laboratorform.getPantient().getId());
+			pr.setInt(2, count);
+			pr.setString(3, laboratorform.getResult());
+			if(!pr.execute()){
+				query = "insert into tbllaborator (patientid,count) values (?,?)";
+				pr = conn.prepareStatement(query);
+				pr.setString(1, laboratorform.getPantient().getId());
+				pr.setInt(2, count);
+				pr.execute();
+			}
+				
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	
+	public boolean saveLaborator(String patientid,int count,String value, String laboratorName){
 		String query = "update tbllaborator set `"+laboratorName+"`= "+value+" where patientid="+patientid+""
 				+ " and count = "+ count+"";
 		Statement st;

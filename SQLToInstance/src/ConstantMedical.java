@@ -1,4 +1,4 @@
-package Model;
+
 
 public class ConstantMedical {
 	public static final String[] LABORATOR_CATEGORY = {

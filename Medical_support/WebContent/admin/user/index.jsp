@@ -31,7 +31,7 @@
 			<div class="content-box">
 				<!-- Start Content Box -->
 				<div class="content-box-header">
-					<h3>Content box</h3>
+					<h3>User</h3>
 					<a href="<%=request.getContextPath()%>/admin/user/new" class="button"
 						style="margin-left: 70%; margin-top: 5px">New User</a>
 				</div>

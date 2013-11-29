@@ -1,3 +1,4 @@
+<%@page import="Model.LaboratorForm"%>
 <%@page import="java.util.Vector"%>
 <%@page import="Model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -23,30 +24,51 @@
 			<div class="content-box">
 				<!-- Start Content Box -->
 				<div class="content-box-header">
-					<h3>Content box</h3>
+					<h3>Edit laborator form</h3>
 					<ul class="content-box-tabs">
 					</ul>
 					<div class="clear"></div>
 				</div>
+				<%
+					LaboratorForm lf = (LaboratorForm)request.getAttribute("laboratorFormBean");
+					
+				%>
 				<div
 					style="padding-left: 40px; padding-top: 20px; padding-bottom: 20px;">
-					<form action="save" method="post">
-						<s:hidden name="medicineBean.id"></s:hidden>
-						<p>
-							<s:textfield name="medicineBean.name" key="Medicine Name"
-								cssClass="text-input medium-input"></s:textfield>
-						</p>
-						<p>
-							<s:textfield name="medicineBean.description" key="Medicine Description"
-								cssClass="text-input medium-input"></s:textfield>
-						</p>
+					<form action="saveLaboratorForm" method="post">
+						<table>
 						
-						<p>
-							<input class="button" type="submit" value="Submit"></input>
-						</p>
-
+							<tr>
+								<th>Laborator form ID</th>
+								<td><%=lf.getId() %></td>
+							</tr>
+							
+							<tr>
+								<th>Patient ID</th>
+								<td><input type = "text" name="laboratorFormBean.pantient.id" value = "<%=lf.getPantient().getId() %>" class="text-input medium-input"></input></td>
+							</tr>
+							<tr>
+								<th>Time in hospital</th>
+								<td><input type = "text" name="laboratorFormBean.count" value = "<%=lf.getCount() %>" class="text-input medium-input" ></input></td>
+							</tr>
+							<tr>
+								<th>Result</th>
+								<td><input type = "text" name="laboratorFormBean.result" value = "<%=lf.getResult() %>" class="text-input medium-input"></td>
+							</tr>
+							<tr>
+								<th>View detail</th>
+								<td><a
+										href="<%=request.getContextPath()%>/admin/laborator/detail?patientid=<%=lf.getPantient().getId()%>
+										&count=<%=lf.getCount()%>">
+											View
+									</a></td>
+							</tr>
+							
+							<tr>
+								<td><input class="button" type="submit" value="Save"></input></td>
+							</tr>
+						</table>
 					</form>
-
 				</div>
 			</div>
 			<div class="clear"></div>

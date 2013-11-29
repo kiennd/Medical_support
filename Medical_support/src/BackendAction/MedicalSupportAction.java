@@ -4,13 +4,13 @@ import java.util.Vector;
 
 import weka.classifiers.meta.FilteredClassifier;
 import weka.classifiers.trees.J48;
-import weka.core.Attribute;
-import weka.core.FastVector;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.experiment.InstanceQuery;
+import DAO.LaboratorDAO;
 import Model.ConstantMedical;
 import Model.Laborator;
+import Model.LaboratorForm;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -24,8 +24,10 @@ public class MedicalSupportAction  extends ActionSupport{
 	Vector<Laborator> laborators;
 	Vector<String> laboratorName = new Vector<>();
 	Vector<String> laboratorValue = new Vector<>();
-
-	String result;
+	Vector<Laborator> abNormals;
+	Vector<LaboratorForm> nearLaboratorForms;
+	
+	String disease;
 	
 	public MedicalSupportAction() {
 		laborators = new Vector<>();
@@ -56,7 +58,6 @@ public class MedicalSupportAction  extends ActionSupport{
 
 			Instances data = query.retrieveInstances();
 
-
 			data.setClassIndex(data.numAttributes() - 1); 
 			System.out.println("load done");
 			J48 j48 = new J48();
@@ -81,8 +82,11 @@ public class MedicalSupportAction  extends ActionSupport{
 	        System.out.println(". predicted value: "
 	                + data.classAttribute().value((int) pred));
 	        System.out.println(data.classAttribute().value((int) pred));
+	        this.disease = data.classAttribute().value((int) pred);
+	        setAbNormalValue();
+	        LaboratorDAO ld = new LaboratorDAO();
+	        this.nearLaboratorForms = ld.findLaborator(disease, abNormals);
 	        
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,17 +94,41 @@ public class MedicalSupportAction  extends ActionSupport{
 		return SUCCESS;
 	}
 	
+	public void setAbNormalValue(){
+		LaboratorDAO mpd = new LaboratorDAO();
+		abNormals  = new Vector<>();
+        for (int i = 0; i < laboratorValue.size(); i++) {	
+        	if(laboratorValue.elementAt(i).length()>0){
+    			Laborator la = mpd.checkAbnormal(laboratorName.elementAt(i), Float.parseFloat(laboratorValue.elementAt(i)));
+    			if(la!=null){
+    				abNormals.addElement(la);
+    			}
+        		
+        	}
+		}
+	}
+	
+	
 	public float valueWithName(String name){
 		return 0;
 	}
 	
 	
-	public String getResult() {
-		return result;
+
+	public Vector<LaboratorForm> getNearLaboratorForms() {
+		return nearLaboratorForms;
 	}
 
-	public void setResult(String result) {
-		this.result = result;
+	public void setNearLaboratorForms(Vector<LaboratorForm> nearLaboratorForms) {
+		this.nearLaboratorForms = nearLaboratorForms;
+	}
+
+	public String getDisease() {
+		return disease;
+	}
+
+	public void setDisease(String disease) {
+		this.disease = disease;
 	}
 
 	public Vector<Laborator> getLaborators() {
@@ -122,5 +150,14 @@ public class MedicalSupportAction  extends ActionSupport{
 			this.laboratorValue.addElement(laboratorValue[i]);
 		}
 	}
+
+	public Vector<Laborator> getAbNormals() {
+		return abNormals;
+	}
+
+	public void setAbNormals(Vector<Laborator> abNormals) {
+		this.abNormals = abNormals;
+	}
+	
 	
 }

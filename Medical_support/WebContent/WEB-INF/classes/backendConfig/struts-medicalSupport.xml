@@ -8,7 +8,7 @@
 			<result>index.jsp</result>
 		</action>
 		<action name="detect" class="BackendAction.MedicalSupportAction" method="Detect">
-			<result name="success">index.jsp</result>
+			<result name="success">detectedResult.jsp</result>
 		</action>
 
 

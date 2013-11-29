@@ -9,7 +9,7 @@ public class Laborator implements Serializable {
 	private static final long serialVersionUID = -242495308446435764L;
 	private String name;
 	private float result;
-	private float normalValue;
+	private String normalValue;
 	public String getName() {
 		return name;
 	}
@@ -22,10 +22,11 @@ public class Laborator implements Serializable {
 	public void setResult(float result) {
 		this.result = result;
 	}
-	public float getNormalValue() {
+	public String getNormalValue() {
 		return normalValue;
 	}
-	public void setNormalValue(float normalValue) {
+	public void setNormalValue(String normalValue) {
 		this.normalValue = normalValue;
 	}
+	
 }

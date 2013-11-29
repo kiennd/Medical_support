@@ -198,4 +198,64 @@ public class LaboratorDAO {
 
 	}
 	
+	public Laborator checkAbnormal(String name, float value){
+		
+		String query = "select * from tblmedicalparam where name = ?";
+		PreparedStatement pr;
+		try {
+			pr = conn.prepareStatement(query);
+			pr.setString(1, name);
+			ResultSet rs = pr.executeQuery();
+			if(rs.next()){
+				float max =  rs.getFloat("maxvalue");
+				float min = rs.getFloat("minvalue");
+				if(!(value>=min && value <=max)){
+					Laborator la = new Laborator();
+					la.setName(name);
+					la.setResult(value);
+					la.setNormalValue(min+ " - " + max);
+					return la;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	public Vector<LaboratorForm> findLaborator(String disease, Vector<Laborator> abNormals){
+		
+		conn = DBConnection.getConn();
+		StringBuffer query = new StringBuffer("select * from tblLaboratorForm where result = '"+disease+"' limit 10");
+
+		
+		System.out.println(query);
+
+		java.sql.Statement st;
+		ResultSet rs = null;
+		Vector<LaboratorForm> result = new Vector<>();
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery(query.toString());
+			
+			while (rs.next()) {
+				PatientDAO pd = new PatientDAO();
+				Patient p = pd.getPatient(rs.getString("patientid"));
+				
+				LaboratorForm r = new LaboratorForm();
+				r.setId(rs.getInt("id"));
+				r.setPantient(p);
+				r.setResult(rs.getString("result"));
+				r.setCount(rs.getInt("count"));
+				
+				result.add(r);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 }

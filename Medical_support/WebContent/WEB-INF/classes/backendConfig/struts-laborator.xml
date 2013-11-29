@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="laborator" namespace="/admin/laborator" extends="struts-default">
+		<action name="index" class="BackendAction.LaboratorAction" method="indexAction">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="store">
+				<param name="operationMode">RETRIEVE</param>
+			</interceptor-ref>
+			<result name="success">index.jsp</result>
+		</action>
+
+		<action name="detail" class="BackendAction.LaboratorAction" method="detailAction">
+			<result name="success">laboratorDetail.jsp</result>
+		</action>
+		<action name="saveLaborator" class="BackendAction.LaboratorAction" method="saveLaborator">
+			<result name="success">aftersave.jsp</result>
+		</action>
+
+		<!-- <action name="edit" class="BackendAction.LaboratorAction" method="edit">
+			<result name="success">edit.jsp</result>
+		</action>
+
+		<action name="save" class="BackendAction.LaboratorAction" method="save">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+			</interceptor-ref>
+			<result name="success" type="redirectAction">index</result>
+		</action>
+
+		<action name="delete" class="BackendAction.LaboratorAction" method="delete">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+			</interceptor-ref>
+			<result name="success" type="redirectAction">index</result>
+			<result name="error">new.jsp</result>
+		</action>
+		
+		<action name="new" class="BackendAction.LaboratorAction" method="newAction">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+			</interceptor-ref>
+			<result name="success" type="redirectAction">index</result>
+			<result name="error">new.jsp</result>
+		</action> -->
+	</package>
+
+</struts>

@@ -10,5 +10,5 @@
 	<include file="backendConfig/struts-role.xml"></include>
 	<include file="backendConfig/struts-medicine.xml"></include>
 	<include file="backendConfig/struts-patient.xml"></include>
-	
+	<include file="backendConfig/struts-laborator.xml"></include>
 </struts>

@@ -13,6 +13,7 @@
 	if (request.getAttribute("roles") == null) {
 		String redirectURL = "index";
 		response.sendRedirect(redirectURL);
+		return;
 	}
 %>
 </head>
@@ -75,7 +76,7 @@
 											title="Delete"><img
 												src="../resources/images/icons/cross.png" alt="Delete" /></a>
 										</td>
-									</tr>
+									</tr>	
 								</s:iterator>
 							</tbody>
 							<tfoot>

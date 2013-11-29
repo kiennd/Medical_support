@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import Model.Medicine;
+import Model.MedicineForm;
 public class MedicineDAO {
 	Connection conn;
 
@@ -65,6 +66,34 @@ public class MedicineDAO {
 			e.printStackTrace();
 		}
 		return r;
+	}
+	
+	public Vector<MedicineForm> getMedicineForms(String patientid, int count){
+		Vector<MedicineForm> medicineForms = new Vector<>();
+		String query = "select * from tblmedicineform where patientid = ? and count = ?";
+		try {
+			PreparedStatement pr = conn.prepareStatement(query);
+			pr.setString(1, patientid);
+			pr.setInt(2, count);
+			ResultSet rs = pr.executeQuery();
+			while(rs.next()){
+				MedicineForm mf = new MedicineForm();
+				mf.setId(rs.getInt("id"));
+				mf.setPatientid(rs.getString("patientid"));
+				mf.setCount(rs.getInt("count"));
+				MedicineDAO md = new MedicineDAO();
+				Medicine m = md.getMedicine(rs.getInt("medicineid"));
+				mf.setMedicine(m);
+				mf.setQuantity(rs.getInt("quantity"));
+				mf.setDescription(rs.getString("description"));
+				medicineForms.addElement(mf);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return medicineForms;
 	}
 
 	public boolean updateMedicine(Medicine medicine) {

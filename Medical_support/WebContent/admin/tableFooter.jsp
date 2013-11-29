@@ -8,20 +8,26 @@
 				onclick="document.getElementById('form1').submit();">Delete
 				selected item</a>
 		</div>
+		<%
+			int pg = (Integer)request.getAttribute("page");
+			int totalPage = (Integer)request.getAttribute("totalPage");
+			
+		%>
 		<div class="pagination">
-			<s:if test="%{page>1}">
+			<%if(pg>1){%>			
 				<a href="index?page=1" title="First Page">&laquo; First</a>
-				<a href="index?page=<s:property value="%{page-1}" />" class="number"
-					title="1"><s:property value="%{page-1}" /></a>
-			</s:if>
-			<a href="index?page=<s:property value="%{page}" />"
-				class="number current" title="1"><s:property value="%{page}" /></a>
-			<s:if test="%{page<totalPage}">
-				<a href="index?page=<s:property value="%{page+1}" />" class="number"
-					title="1"><s:property value="%{page+1}" /></a>
-				<a href="index?page=<s:property value="%{totalPage}" />"
+				<a href="index?page=<%=pg-1%>" class="number"
+					title="1"><%=pg-1%></a>
+			<%} %>
+			
+			<a href="index?page=<%=pg%>" class="number current" title="1"><%=pg%></a>
+			
+			<%if(pg<totalPage){%>				
+				<a href="index?page=<%=pg+1%>" class="number"
+					title="1"><%=pg+1%></a>
+				<a href="index?page=<%=totalPage%>"
 					title="Last Page">Last &raquo;</a>
-			</s:if>
+			<%} %>
 		</div> <!-- End .pagination -->
 		<div class="clear"></div>
 	</td>

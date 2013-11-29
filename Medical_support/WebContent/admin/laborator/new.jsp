@@ -40,28 +40,14 @@
 						</div>
 					</s:if>
 					<form action="new" method="post">
+						<s:hidden name="medicineBean.id" value="0"></s:hidden>
 						<p>
-							<s:textfield name="patientBean.id" key="ID"
-								cssClass="text-input medium-input"></s:textfield>
-						</p>
-						
-						<p>
-							<s:textfield name="patientBean.name" key="Patient Name"
+							<s:textfield name="medicineBean.name" key="Medicine Name"
 								cssClass="text-input medium-input"></s:textfield>
 						</p>
 						<p>
-							<s:textfield name="patientBean.bornYear" key="Born year"
+							<s:textfield name="medicineBean.description" key="Description"
 								cssClass="text-input medium-input"></s:textfield>
-						</p>
-						
-						
-						<p>
-							<b>Sex:<br/><br/></b>
-							<select name="patientBean.sex">
-								<option selected="selected" value="1">Nam</option>
-								<option value="0">Nữ</option>
-								
-							</select>
 						</p>
 						<p>
 							<input class="button" type="submit" value="Submit"></input>

@@ -61,3 +61,8 @@
 				DD_belatedPNG.fix('.png_bg, img, li');
 			</script>
 		<![endif]-->
+<script type="text/javascript"
+	src="../resources/scripts/jquery.jeditable.js"></script>
+	
+
+		

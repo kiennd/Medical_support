@@ -13,6 +13,7 @@
 	if (request.getAttribute("userList") == null) {
 		String redirectURL = "index";
 		response.sendRedirect(redirectURL);
+		return;
 	}
 %>
 </head>

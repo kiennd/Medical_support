@@ -39,9 +39,9 @@
 		<ul id="main-nav">
 			<!-- Accordion Menu -->
 
-			<li><a href="http://www.google.com"
+			<li><a href="<%=request.getContextPath()%>/admin/medicalSupport/index"
 				class="nav-top-item no-submenu"> <!-- Add the class "no-submenu" to menu items with no sub menu -->
-					Dashboard
+					Medical support
 			</a></li>
 
 			<li><a href="#" id="usermanager" class="nav-top-item"> User
@@ -52,41 +52,24 @@
 					<li><a id="role"
 						href="<%=request.getContextPath()%>/admin/role/index.jsp">Role</a></li>
 					<!-- Add class "current" to sub menu items also -->
-				</ul></li>
+				</ul>
+			</li>
+			
+			<li><a href="#" id="laboratormanagement" class="nav-top-item"> Laborator Management </a>
+				<ul>
+					<li><a id="patient"
+						href="<%=request.getContextPath()%>/admin/patient/index">Patient</a></li>
+					<li><a id="laborator"
+						href="<%=request.getContextPath()%>/admin/laborator/index">Laborator</a></li>
+					<li><a id="medicine"
+						href="<%=request.getContextPath()%>/admin/medicine/index">Medicine</a></li>
+						
+					<!-- Add class "current" to sub menu items also -->
+				</ul>
+			</li>
+			
 
-			<li><a href="#" id="itemmanagement" class="nav-top-item">
-					Item management </a>
-				<ul>
-					<li><a id="category"
-						href="<%=request.getContextPath()%>/admin/category/index.jsp">Category</a></li>
-					<li><a id="books"
-						href="<%=request.getContextPath()%>/admin/book/index">Books</a></li>
-					<li><a id="publisher"
-						href="<%=request.getContextPath()%>/admin/publisher/index.jsp?page=1">Publisher</a></li>
-					<li><a id="author"
-						href="<%=request.getContextPath()%>/admin/author/index.jsp?page=1">Author</a></li>
-					<li><a id="store"
-						href="<%=request.getContextPath()%>/admin/store/index.jsp">Store</a></li>
-				</ul></li>
-			<li><a href="#" id="ordermanagement" class="nav-top-item">
-					Order management </a>
-				<ul>
-					<li><a id="reservation"
-						href="<%=request.getContextPath()%>/admin/reservation/index">Reservation</a></li>
-					<li><a id="order"
-						href="<%=request.getContextPath()%>/admin/order/index">Order</a></li>
-					<li><a id="paymentmethod"
-						href="<%=request.getContextPath()%>/admin/paymentMethod/index.jsp">Payment
-							method</a></li>
-				</ul></li>
 
-			<li><a href="#" class="nav-top-item"> Settings </a>
-				<ul>
-					<li><a href="#">General</a></li>
-					<li><a href="#">Design</a></li>
-					<li><a href="#">Your Profile</a></li>
-					<li><a href="#">Users and Permissions</a></li>
-				</ul></li>
 		</ul>
 		<!-- End #main-nav -->
 
@@ -98,52 +81,10 @@
 		document.getElementById("usermanager").setAttribute("class",
 				"nav-top-item current");
 	}
-	if (document.URL.toLowerCase().indexOf("/category") >= 0) {
-		document.getElementById("category").setAttribute("class", "current");
-		document.getElementById("itemmanagement").setAttribute("class",
-				"nav-top-item current");
-	}
-	if (document.URL.toLowerCase().indexOf("/paymentmethod") >= 0) {
-		document.getElementById("paymentmethod").setAttribute("class",
-				"current");
-		document.getElementById("ordermanagement").setAttribute("class",
-				"nav-top-item current");
-	}
-
-	if (document.URL.toLowerCase().indexOf("/order") >= 0) {
-		document.getElementById("order").setAttribute("class", "current");
-		document.getElementById("ordermanagement").setAttribute("class",
-				"nav-top-item current");
-	}
-
-	if (document.URL.toLowerCase().indexOf("/reservation") >= 0) {
-		document.getElementById("reservation").setAttribute("class", "current");
-		document.getElementById("ordermanagement").setAttribute("class",
-				"nav-top-item current");
-	}
-	if (document.URL.toLowerCase().indexOf("/book", 22) >= 0) {
-		document.getElementById("books").setAttribute("class", "current");
-		document.getElementById("itemmanagement").setAttribute("class",
-				"nav-top-item current");
-	}
-	if (document.URL.toLowerCase().indexOf("/store") >= 0) {
-		document.getElementById("store").setAttribute("class", "current");
-		document.getElementById("itemmanagement").setAttribute("class",
-				"nav-top-item current");
-	}
-	if (document.URL.toLowerCase().indexOf("/role") >= 0) {
-		document.getElementById("role").setAttribute("class", "current");
+	if (document.URL.toLowerCase().indexOf("/patient") >= 0) {
+		document.getElementById("user").setAttribute("class", "current");
 		document.getElementById("usermanager").setAttribute("class",
 				"nav-top-item current");
 	}
-	if (document.URL.toLowerCase().indexOf("/publisher") >= 0) {
-		document.getElementById("publisher").setAttribute("class", "current");
-		document.getElementById("itemmanagement").setAttribute("class",
-				"nav-top-item current");
-	}
-	if (document.URL.toLowerCase().indexOf("/author") >= 0) {
-		document.getElementById("author").setAttribute("class", "current");
-		document.getElementById("itemmanagement").setAttribute("class",
-				"nav-top-item current");
-	}
+
 </script>

@@ -4,7 +4,13 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+	<%
 
+			String redirectURL = request.getContextPath()
+					+ "/admin/medicalSupport/index";
+			response.sendRedirect(redirectURL);
+
+	%>
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -60,16 +66,7 @@
 <script type="text/javascript" src="resources/scripts/jquery.wysiwyg.js"></script>
 
 
-<%
-	User user = (User) session.getAttribute("user");
-	String name = "";
-	if (user == null) {
-		String redirectURL = "login.jsp";
-		response.sendRedirect(redirectURL);
-	} else {
-		name = user.getUsername();
-	}
-%>
+
 </head>
 
 <body>

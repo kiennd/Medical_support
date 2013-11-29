@@ -25,7 +25,6 @@
 		<%@include file="../sideBar.jsp"%>
 		<div id="main-content">
 			<!-- Main Content Section with everything -->
-			<%@include file="../searchForm.jsp"%>
 			<div class="clear"></div>
 			<!-- End .clear -->
 			<div class="content-box">

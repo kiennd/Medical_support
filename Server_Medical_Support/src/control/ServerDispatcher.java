@@ -1,11 +1,14 @@
 package control;
 
+import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Vector;
 
 import Model.ClientInfo;
+import Model.DetectedResult;
+import Model.Laborator;
 import Model.Message;
 
 public class ServerDispatcher extends Thread {
@@ -36,9 +39,15 @@ public class ServerDispatcher extends Thread {
 	}
 
 	public synchronized void addMessToQueue(Message mes)
-			throws ClassNotFoundException, SQLException {
+			throws ClassNotFoundException, SQLException, RemoteException {
 		int type = mes.getType();
 		switch (type) {
+		case Setting.REQUEST_DETECT:
+			
+			Vector<Laborator>laborators = (Vector<Laborator>) mes.getObj();
+			DetectedResult dr = rmiServer.detectDisease(laborators);
+			addMessageToQueue(Setting.RESPONSE_DETECT, mes.getReceipent(), mes.getSender(), dr);
+			break;
 		
 		default:
 			messageQueue.add(mes);

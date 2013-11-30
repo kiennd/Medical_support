@@ -1,9 +1,10 @@
 package view;
 
-import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,21 +12,20 @@ import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-
-import java.awt.Font;
-
-import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Model.ConstantMedical;
 import Model.Laborator;
+import Model.LaboratorForm;
 
 public class DetectView extends JFrame {
 
@@ -38,6 +38,11 @@ public class DetectView extends JFrame {
 	private Vector<JTextField> txtList;
 	private JTable tblAbnormal;
 	private JTable tblSimilarLaborator;
+	private JButton btnSubmit;
+	private JLabel lblDiseaseName;
+	private DefaultTableModel abnormalModel;
+	private DefaultTableModel nearLaboratorFormModel;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -73,7 +78,7 @@ public class DetectView extends JFrame {
 			e.printStackTrace();
 		}
 		
-		JButton btnSubmit = new JButton("Submit");
+		btnSubmit = new JButton("Submit");
 		btnSubmit.setBounds(38, 443, 117, 29);
 		contentPane.add(btnSubmit);
 					
@@ -97,17 +102,17 @@ public class DetectView extends JFrame {
 		contentPane.add(resultPanel);
 		resultPanel.setLayout(null);
 		
-		JLabel lblDisease = new JLabel("Disease name:");
-		lblDisease.setBounds(20, 25, 118, 16);
-		resultPanel.add(lblDisease);
+		JLabel lbl121212 = new JLabel("Disease name:");
+		lbl121212.setBounds(20, 25, 118, 16);
+		resultPanel.add(lbl121212);
 		
-		JLabel lblDiseaseName = new JLabel("");
+		lblDiseaseName = new JLabel("");
 		lblDiseaseName.setBounds(150, 25, 200, 16);
 		resultPanel.add(lblDiseaseName);
 		
-		JLabel lblAbnormalValue = new JLabel("Abnormal value:");
-		lblAbnormalValue.setBounds(20, 53, 118, 16);
-		resultPanel.add(lblAbnormalValue);
+		JLabel lbl323 = new JLabel("Abnormal value:");
+		lbl323.setBounds(20, 53, 118, 16);
+		resultPanel.add(lbl323);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(20, 81, 346, 110);
@@ -115,6 +120,13 @@ public class DetectView extends JFrame {
 		
 		tblAbnormal = new JTable();
 		scrollPane_1.setViewportView(tblAbnormal);
+		
+		Vector<String> columnNames = new Vector<>();
+		columnNames.add("Name");
+		columnNames.add("Value");
+		columnNames.add("Normal Value Range");
+		abnormalModel = new DefaultTableModel(columnNames, 0);
+		tblAbnormal.setModel(abnormalModel);
 		
 		JLabel lblNewLabel_1 = new JLabel(" Similar laborator:");
 		lblNewLabel_1.setBounds(20, 203, 118, 16);
@@ -126,6 +138,16 @@ public class DetectView extends JFrame {
 		
 		tblSimilarLaborator = new JTable();
 		scrollPane_2.setViewportView(tblSimilarLaborator);
+		
+		Vector<String> columnNames2 = new Vector<>();
+		columnNames2.add("ID");
+		columnNames2.add("Patient id");
+		columnNames2.add("Time");
+		columnNames2.add("Patient name");
+		columnNames2.add("Result");
+		nearLaboratorFormModel = new DefaultTableModel(columnNames2, 0);
+		tblSimilarLaborator.setModel(nearLaboratorFormModel);
+		
 		
 		JLabel label = new JLabel("");
 		label.setBounds(6, 6, 869, 495);
@@ -151,7 +173,62 @@ public class DetectView extends JFrame {
 	}
 	
 	public Vector<Laborator> getLaborators(){
-		return null;
+		Vector<Laborator> laborators = new Vector<>();
+		for (int i = 0; i < txtList.size(); i++) {
+			Laborator la = new Laborator();
+			la.setName(txtList.elementAt(i).getName());
+			if(txtList.elementAt(i).getText().length()>0){
+				la.setResult(Float.parseFloat(txtList.elementAt(i).getText()));
+			}else{
+				la.setResult(Float.NaN);
+			}
+			laborators.add(la);
+		}
+		return laborators;
 	}
 	
+	public void addButtonActionListener(ActionListener act){
+		this.btnSubmit.addActionListener(act);
+	}
+	
+	public void setDiseaseName(String name){
+		this.lblDiseaseName.setText(name);
+	}
+	
+	public void setAbNormalTable(Vector<Laborator> abNormals){
+		clearAbNormalTable();
+		for (Laborator laborator : abNormals) {
+			Vector<String> row = new Vector<>();
+			row.add(laborator.getName());
+			row.add(laborator.getResult()+"");
+			abnormalModel.addRow(row);
+		}
+	}
+	
+	public void setSimilarTable(Vector<LaboratorForm> laboratorForms){
+		clearSimmilarTable();
+		for (LaboratorForm laboratorForm : laboratorForms) {
+			Vector<String> row = new Vector<>();
+			row.add(laboratorForm.getId()+"");
+			row.add(laboratorForm.getPantient().getId());
+			row.add(laboratorForm.getCount()+"");
+			row.add(laboratorForm.getPantient().getName());
+			row.add(laboratorForm.getResult());
+			
+			nearLaboratorFormModel.addRow(row);
+		}
+	}
+	
+	
+	public void clearAbNormalTable(){
+		while (abnormalModel.getRowCount() > 0) {
+			abnormalModel.removeRow(0);
+		}
+	}
+	public void clearSimmilarTable(){
+		while (nearLaboratorFormModel.getRowCount() > 0) {
+			nearLaboratorFormModel.removeRow(0);
+		}
+	}
+
 }

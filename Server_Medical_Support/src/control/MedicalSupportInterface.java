@@ -11,4 +11,5 @@ import Model.User;
 public interface MedicalSupportInterface extends Remote {
 	public boolean checkLogin(User u) throws RemoteException;
 	public DetectedResult detectDisease(Vector<Laborator> laborators) throws RemoteException;
+	
 }

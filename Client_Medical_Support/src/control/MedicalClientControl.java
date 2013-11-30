@@ -2,17 +2,25 @@ package control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Vector;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import view.DetectView;
+import view.LaboratorDetailView;
+import view.LoginView;
+import Model.DetectedResult;
 import Model.Laborator;
+import Model.LaboratorForm;
 import Model.Message;
 import Model.User;
-import view.DetectView;
-import view.LoginView;
 
 public class MedicalClientControl {
 	private User currentUser;
@@ -21,8 +29,10 @@ public class MedicalClientControl {
 	private ObjectOutputStream oos = null;
 	private LoginView loginView;
 	private DetectView detectView;
+	private LaboratorDetailView detailView;
 	public static final String SERVER_HOSTNAME = "localhost";
 	public static final int SERVER_PORT = 9999;
+	private Vector<LaboratorForm> currentForm;
 
 	public void initLoginView(LoginView loginView) {
 		this.loginView = loginView;
@@ -40,6 +50,7 @@ public class MedicalClientControl {
 	public void initDetectView(DetectView detectView) {
 		this.detectView = detectView;
 		detectView.addButtonActionListener(new ButtonListener());
+		detectView.AddTableMouseListener(new TableRowSelectListener());
 	}
 	
 	class ButtonListener implements ActionListener {
@@ -55,6 +66,52 @@ public class MedicalClientControl {
 				sendMessage(Setting.REQUEST_DETECT, currentUser.getUsername(), currentUser.getUsername(), laborators);
 			}
 		}
+	}
+	
+	class TableRowSelectListener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+		   if (e.getClickCount() == 1) {
+			   	if(e.getSource() instanceof JTable){
+			      JTable target = (JTable)e.getSource();
+			      int row = target.getSelectedRow();
+			      if(detailView==null){
+			    	  detailView  = new LaboratorDetailView();
+			      }
+			      detailView.initData(currentForm.elementAt(row));
+			      detailView.setVisible(true);
+			      
+			   	}
+		   }
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
+		
 	}
 	
 
@@ -100,8 +157,11 @@ public class MedicalClientControl {
 					break;
 				case Setting.RESPONSE_DETECT:
 					System.out.println("detected");
-					
-					
+					DetectedResult dr =  (DetectedResult) mes.getObj();
+					detectView.setAbNormalTable(dr.getAbNormals());
+					detectView.setSimilarTable(dr.getNearLaboratorForms());
+					detectView.setDiseaseName(dr.getDisease());
+					currentForm = dr.getNearLaboratorForms();
 					break;
 					
 				}

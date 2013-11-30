@@ -227,7 +227,9 @@ public class LaboratorDAO {
 	public Vector<LaboratorForm> findLaborator(String disease, Vector<Laborator> abNormals){
 		
 		conn = DBConnection.getConn();
-		StringBuffer query = new StringBuffer("select * from tblLaboratorForm where result = '"+disease+"' limit 10");
+		StringBuffer query = new StringBuffer("select * from tblLaboratorForm as a "
+				+ "inner join tbllaborator as b on a.patientid = b.patientid and a.count = b.count"
+				+ "  where result = '"+disease+"' limit 10");
 
 		
 		System.out.println(query);
@@ -241,14 +243,25 @@ public class LaboratorDAO {
 			
 			while (rs.next()) {
 				PatientDAO pd = new PatientDAO();
-				Patient p = pd.getPatient(rs.getString("patientid"));
+				Patient p = pd.getPatient(rs.getString("a.patientid"));
 				
 				LaboratorForm r = new LaboratorForm();
-				r.setId(rs.getInt("id"));
+				r.setId(rs.getInt("a.id"));
 				r.setPantient(p);
-				r.setResult(rs.getString("result"));
-				r.setCount(rs.getInt("count"));
-				
+				r.setResult(rs.getString("a.result"));
+				r.setCount(rs.getInt("a.count"));
+				Vector<Laborator> laborators = new Vector<>();
+				for(int i=0;i<ConstantMedical.LABORATOR_CATEGORY.length;i++){
+					float value = rs.getFloat(ConstantMedical.LABORATOR_CATEGORY[i]);
+					if(rs.wasNull()){
+						value = Float.NaN;
+					}
+					Laborator la = new Laborator();
+					la.setName(ConstantMedical.LABORATOR_CATEGORY[i]);
+					la.setResult(value);
+					laborators.addElement(la);;
+				}
+				r.setLaborators(laborators);
 				result.add(r);
 			}
 

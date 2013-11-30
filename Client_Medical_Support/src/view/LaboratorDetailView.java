@@ -4,20 +4,26 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
+import Model.Laborator;
+import Model.LaboratorForm;
+
 public class LaboratorDetailView extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTable table;
-
+	private JTable tblLaborators;
+	private JLabel lblPatientID,lblPatientName,lblBornYear,lblGender;
+	private DefaultTableModel laboratorsModel;
 	/**
 	 * Launch the application.
 	 */
@@ -41,52 +47,57 @@ public class LaboratorDetailView extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JLabel lblPatientId_ = new JLabel("Patient ID:");
-			lblPatientId_.setBounds(24, 26, 85, 16);
-			contentPanel.add(lblPatientId_);
+			JLabel lblPati1212 = new JLabel("Patient ID:");
+			lblPati1212.setBounds(24, 26, 85, 16);
+			contentPanel.add(lblPati1212);
 		}
 		{
-			JLabel lblPatientID = new JLabel("");
+			lblPatientID = new JLabel("");
 			lblPatientID.setBounds(170, 26, 212, 16);
 			contentPanel.add(lblPatientID);
 		}
 		{
-			JLabel lblPatientName = new JLabel("Patient Name:");
-			lblPatientName.setBounds(24, 54, 99, 16);
-			contentPanel.add(lblPatientName);
+			JLabel lblPatie1212 = new JLabel("Patient Name:");
+			lblPatie1212.setBounds(24, 54, 99, 16);
+			contentPanel.add(lblPatie1212);
 		}
 		{
-			JLabel lblBornYear = new JLabel("Born year:");
-			lblBornYear.setBounds(24, 82, 91, 16);
+			JLabel lbl128912 = new JLabel("Born year:");
+			lbl128912.setBounds(24, 82, 91, 16);
+			contentPanel.add(lbl128912);
+		}
+		{
+			lblBornYear = new JLabel("");
+			lblBornYear.setBounds(170, 82, 212, 16);
 			contentPanel.add(lblBornYear);
 		}
 		{
-			JLabel label = new JLabel("");
-			label.setBounds(170, 82, 212, 16);
-			contentPanel.add(label);
+			lblPatientName = new JLabel("");
+			lblPatientName.setBounds(170, 54, 212, 16);
+			contentPanel.add(lblPatientName);
 		}
 		{
-			JLabel lblNewLabel = new JLabel("");
-			lblNewLabel.setBounds(170, 54, 212, 16);
-			contentPanel.add(lblNewLabel);
+			JLabel lblh821 = new JLabel("Gender:");
+			lblh821.setBounds(24, 110, 61, 16);
+			contentPanel.add(lblh821);
 		}
 		{
-			JLabel lblSex = new JLabel("Gender:");
-			lblSex.setBounds(24, 110, 61, 16);
-			contentPanel.add(lblSex);
+			lblGender = new JLabel("");
+			lblGender.setBounds(170, 110, 212, 16);
+			contentPanel.add(lblGender);
 		}
 		{
-			JLabel lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setBounds(170, 110, 212, 16);
-			contentPanel.add(lblNewLabel_1);
-		}
-		{
-			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(24, 151, 413, 249);
-			contentPanel.add(scrollPane);
+			JScrollPane scroll = new JScrollPane();
+			scroll.setBounds(24, 151, 413, 249);
+			contentPanel.add(scroll);
 			{
-				table = new JTable();
-				scrollPane.setViewportView(table);
+				tblLaborators = new JTable();
+				scroll.setViewportView(tblLaborators);
+				Vector<String> columnNames = new Vector<>();
+				columnNames.add("Name");
+				columnNames.add("Result");
+				laboratorsModel = new DefaultTableModel(columnNames, 0);
+				tblLaborators.setModel(laboratorsModel);
 			}
 		}
 		{
@@ -108,6 +119,35 @@ public class LaboratorDetailView extends JDialog {
 				});
 			}
 		}
+	}
+	
+	public void initData(LaboratorForm lf){
+		this.lblPatientName.setText(lf.getPantient().getName());
+		this.lblPatientID.setText(lf.getPantient().getId());
+		switch (lf.getPantient().getSex()) {
+		case 0:
+			this.lblGender.setText("Nữ");
+			
+			break;
+		case 1:
+			
+			this.lblGender.setText("Nam");
+			break;
+
+		}
+		this.lblBornYear.setText(lf.getPantient().getBornYear()+"");
+		
+		
+		
+		Vector<Laborator>laborators = lf.getLaborators();
+		for (Laborator laborator : laborators) {
+			Vector<String> row = new Vector<>();
+			row.add(laborator.getName()+ "");
+			row.add(laborator.getResult()+ "");
+			laboratorsModel.addRow(row);
+
+		}
+		
 	}
 
 }

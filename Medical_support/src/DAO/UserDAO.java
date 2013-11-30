@@ -11,9 +11,11 @@ import Model.User;
 
 public class UserDAO {
 	Connection conn;
-
-	public boolean checkLogin(User user) {
+	public UserDAO() {
 		conn = DBConnection.getConn();
+	}
+	public boolean checkLogin(User user) {
+		
 
 		String query = "select * from tbluser where username = ? and password = ?";
 		PreparedStatement pr;

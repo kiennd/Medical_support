@@ -28,8 +28,7 @@ public class LaboratorDAO {
 			query.append("where patientid like '%" + name + "%' or ");
 			query.append("result like '%" + name + "%'");
 		}
-		query.append(" limit "+startIndex+","+endIndex+" ");
-		
+		query.append(" limit "+startIndex+",20");
 		
 		System.out.println(query);
 

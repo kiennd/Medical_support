@@ -73,7 +73,6 @@ public class MedicalSupportAction  extends ActionSupport{
 	        		ins.setValue(ins.attribute(i), Double.parseDouble(v));
 	        	}else{
 	        		ins.setValue(ins.attribute(i), Instance.missingValue());
-	        		
 	        	}
 			}
 	        System.out.println(ins);
@@ -90,7 +89,6 @@ public class MedicalSupportAction  extends ActionSupport{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return SUCCESS;
 	}
 	

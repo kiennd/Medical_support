@@ -21,7 +21,7 @@ public class LaboratorAction extends ActionSupport {
 	int count;
 	private String laboratorName;
 	private String laboratorValue;
-	private String searchKey = "";
+	private String name = "";
 	private Vector<LaboratorForm> laboratorForms; 
 	private int page, totalPage, startIndex, endIndex;
 	private static final int ITEM_PER_PAGE = 20;
@@ -30,7 +30,6 @@ public class LaboratorAction extends ActionSupport {
 	private LaboratorForm laboratorFormBean;
 	private Patient currentPatient;
 	public String addPatient(){
-		
 		return SUCCESS;
 	}
 	
@@ -43,7 +42,7 @@ public class LaboratorAction extends ActionSupport {
 		startIndex = (page - 1) * ITEM_PER_PAGE;
 		endIndex = page * ITEM_PER_PAGE - 1;
 		
-		laboratorForms = ld.findLaborator(searchKey, startIndex,endIndex );
+		laboratorForms = ld.findLaborator(name, startIndex,endIndex );
 		
 		int size = totalRecord;
 		if (size == 0) {
@@ -139,12 +138,14 @@ public class LaboratorAction extends ActionSupport {
 		this.patientid = patientid;
 	}
 
-	public String getSearchKey() {
-		return searchKey;
+	
+
+	public String getName() {
+		return name;
 	}
 
-	public void setSearchKey(String searchKey) {
-		this.searchKey = searchKey;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Vector<LaboratorForm> getLaboratorForms() {

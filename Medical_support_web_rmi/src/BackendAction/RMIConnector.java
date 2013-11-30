@@ -5,6 +5,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import control.MedicalSupportInterface;
+
 public class RMIConnector {
 	private static Registry registry;
 	private static MedicalSupportInterface rmiServer;
@@ -15,6 +17,7 @@ public class RMIConnector {
 				registry = LocateRegistry.getRegistry("localhost", rmiport);
 				rmiServer = (MedicalSupportInterface) registry
 						.lookup("SudokuRmiService");
+				System.out.println("rmi init");
 			}
 		} catch (RemoteException | NotBoundException e) {
 			e.printStackTrace();

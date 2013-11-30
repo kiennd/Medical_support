@@ -7,6 +7,8 @@ import Model.Medicine;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import control.MedicalSupportInterface;
+
 public class MedicineAction extends ActionSupport {
 	
 	/**
@@ -20,13 +22,13 @@ public class MedicineAction extends ActionSupport {
 	private String name = "";
 	private int id;
 	private Vector<String> selection = new Vector<String>();
-	MedicalSupportInterface rmiServer =  RMIConnector.getService();;
 
 	
 
 	public String indexAction() throws RemoteException {
+		;
 		medicines = new Vector<>();
-		medicines = rmiServer.findMedicine(name);
+		medicines = RMIConnector.getService().findMedicine(name);
 		
 		int size = this.medicines.size();
 		
@@ -53,13 +55,15 @@ public class MedicineAction extends ActionSupport {
 
 	
 	public String edit() throws RemoteException {
-		medicineBean = rmiServer.getMedicine(id);
+		
+		medicineBean = RMIConnector.getService().getMedicine(id);
 		if (medicineBean != null)
 			return SUCCESS;
 		return ERROR;
 	}
 	public String save() throws RemoteException {
-		if(rmiServer.updateMedicine(medicineBean)){
+		
+		if(RMIConnector.getService().updateMedicine(medicineBean)){
 			return SUCCESS;		
 		}else{
 			System.out.println("update medicine error");
@@ -68,10 +72,11 @@ public class MedicineAction extends ActionSupport {
 		
 	}
 	public String newAction() throws RemoteException {
+		
 		if(medicineBean==null){
 			return ERROR;
 		}
-		if(rmiServer.newMedicine(medicineBean)){
+		if(RMIConnector.getService().newMedicine(medicineBean)){
 			return SUCCESS;		
 		}else{
 			System.out.println("new medicine error");
@@ -80,9 +85,10 @@ public class MedicineAction extends ActionSupport {
 
 	}
 	public String delete() throws NumberFormatException, RemoteException {
+		
 
 		if (id!= 0) {
-			if(rmiServer.deleteMedicine(id)){
+			if(RMIConnector.getService().deleteMedicine(id)){
 				addActionMessage("Item #" + id + " was deleted !");
 				return SUCCESS;
 			}else{
@@ -90,7 +96,7 @@ public class MedicineAction extends ActionSupport {
 			}
 		} else {
 			for (String s : selection) {
-				if (rmiServer.deleteMedicine(Integer.parseInt(s))){
+				if (RMIConnector.getService().deleteMedicine(Integer.parseInt(s))){
 					addActionMessage("Item #" + s + " was deleted !");
 				}else{
 					return ERROR;

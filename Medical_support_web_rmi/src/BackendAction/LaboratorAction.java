@@ -9,6 +9,8 @@ import Model.Patient;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import control.MedicalSupportInterface;
+
 
 public class LaboratorAction extends ActionSupport {
 	
@@ -28,7 +30,7 @@ public class LaboratorAction extends ActionSupport {
 	private Vector<Laborator> laborators;
 	private LaboratorForm laboratorFormBean;
 	private Patient currentPatient;
-	MedicalSupportInterface rmiServer =  RMIConnector.getService();;
+
 
 	
 	public String addPatient(){
@@ -36,14 +38,15 @@ public class LaboratorAction extends ActionSupport {
 	}
 	
 	public String indexAction() throws RemoteException{
-		int totalRecord = rmiServer.getCountLaborator();
+		
+		int totalRecord = RMIConnector.getService().getCountLaborator();
 		if (page <= 0) {
 			page = 1;
 		}
 		startIndex = (page - 1) * ITEM_PER_PAGE;
 		endIndex = page * ITEM_PER_PAGE - 1;
 		
-		laboratorForms = rmiServer.findLaborator(name, startIndex,endIndex );
+		laboratorForms = RMIConnector.getService().findLaborator(name, startIndex,endIndex );
 		System.out.println(totalRecord);
 		int size = totalRecord;
 		if (size == 0) {
@@ -61,30 +64,35 @@ public class LaboratorAction extends ActionSupport {
 
 	
 	public String detailAction() throws RemoteException{
-		this.laborators = rmiServer.getLaborators(patientid, count);
-		currentPatient = rmiServer.getPatient(patientid);
+		
+		this.laborators = RMIConnector.getService().getLaborators(patientid, count);
+		currentPatient = RMIConnector.getService().getPatient(patientid);
 		
 		return SUCCESS;
 	}
 	
 	
 	public String saveLaborator() throws RemoteException{
-		rmiServer.saveLaborator(patientid, count, laboratorValue, laboratorName);
+		
+		RMIConnector.getService().saveLaborator(patientid, count, laboratorValue, laboratorName);
 		return SUCCESS;
 	}
 	
 	public String viewLaboratorForm() throws RemoteException{
-		laboratorFormBean = rmiServer.getLaboratorForm(patientid, count);
+		
+		laboratorFormBean = RMIConnector.getService().getLaboratorForm(patientid, count);
 		return SUCCESS;
 	}
 	
 	public String saveLaboratorForm() throws RemoteException{
-		rmiServer.saveLaboratorForm(laboratorFormBean);
+		
+		RMIConnector.getService().saveLaboratorForm(laboratorFormBean);
 		return SUCCESS;
 	}
 	
 	public String saveNewLaboratorForm() throws RemoteException{
-		rmiServer.saveNewLaboratorForm(laboratorFormBean);
+		
+		RMIConnector.getService().saveNewLaboratorForm(laboratorFormBean);
 		
 		return SUCCESS;
 		

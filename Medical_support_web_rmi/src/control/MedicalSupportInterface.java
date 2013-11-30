@@ -1,4 +1,4 @@
-package BackendAction;
+package control;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

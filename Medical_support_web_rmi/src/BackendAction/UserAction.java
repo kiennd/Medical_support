@@ -21,14 +21,15 @@ public class UserAction extends ActionSupport {
 	private String confirmPassword;
 	private Vector<String> selection = new Vector<String>();
 	private Vector<Role> roles = new Vector<>();
-	MedicalSupportInterface rmiServer =  RMIConnector.getService();;
+
 
 	public UserAction() {
 	}
 
 	@Override
 	public String execute() throws Exception {
-		this.userList = rmiServer.findUser(name);
+		
+		this.userList = RMIConnector.getService().findUser(name);
 		totalPage = userList.size() / ITEM_PER_PAGE;
 
 		if (this.userList.size() == 0) {
@@ -55,13 +56,15 @@ public class UserAction extends ActionSupport {
 	}
 
 	public String edit() throws Exception {
-		this.userBean = rmiServer.getUser(id);
-		roles = rmiServer.findRole("");
+		
+		this.userBean = RMIConnector.getService().getUser(id);
+		roles = RMIConnector.getService().findRole("");
 		return SUCCESS;
 	}
 
 	public String saveUser() throws Exception {
-		if (rmiServer.saveUser(userBean))
+		
+		if (RMIConnector.getService().saveUser(userBean))
 			return SUCCESS;
 		else
 			return ERROR;
@@ -69,14 +72,14 @@ public class UserAction extends ActionSupport {
 
 	public String deleteUser() throws Exception {
 		if (id != 0) {
-			if (rmiServer.deleteUser(id)) {
+			if (RMIConnector.getService().deleteUser(id)) {
 				addActionMessage("Item #" + id + " was deleted!");
 				return SUCCESS;
 			} else
 				return ERROR;
 		} else {
 			for (String s : selection) {
-				if (rmiServer.deleteUser(Integer.parseInt(s)))
+				if (RMIConnector.getService().deleteUser(Integer.parseInt(s)))
 					addActionMessage("Item #" + s + " was deleted !");
 				else
 					return ERROR;
@@ -87,12 +90,12 @@ public class UserAction extends ActionSupport {
 
 	public String newUser() throws Exception {
 		if (userBean == null) {
-			roles = rmiServer.findRole("");
+			roles = RMIConnector.getService().findRole("");
 
 			return ERROR;
 		}
 		if (confirmPassword.equals(userBean.getPassword())) {
-			if (rmiServer.newUser(userBean)) {
+			if (RMIConnector.getService().newUser(userBean)) {
 				addActionMessage("One item has been created successfully.");
 				return SUCCESS;
 			} else {

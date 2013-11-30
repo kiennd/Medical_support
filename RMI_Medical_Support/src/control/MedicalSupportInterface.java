@@ -53,5 +53,5 @@ public interface MedicalSupportInterface extends Remote {
 	public User getUser(int id) throws RemoteException;
 	public boolean deleteUser(int id) throws RemoteException;
 	public boolean newUser(User user) throws RemoteException;
-	
+	public boolean saveUser(User user) throws RemoteException;
 }

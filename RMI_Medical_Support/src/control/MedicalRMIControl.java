@@ -319,7 +319,7 @@ public class MedicalRMIControl extends UnicastRemoteObject implements
 	@Override
 	public Vector<User> findUser(String name) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return userdao.findUser(name);
 	}
 
 

@@ -14,6 +14,8 @@ import Model.LaboratorForm;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import control.MedicalSupportInterface;
+
 
 public class MedicalSupportAction  extends ActionSupport{
 
@@ -26,11 +28,11 @@ public class MedicalSupportAction  extends ActionSupport{
 	Vector<String> laboratorValue = new Vector<>();
 	Vector<Laborator> abNormals;
 	Vector<LaboratorForm> nearLaboratorForms;
-	MedicalSupportInterface rmiServer =  RMIConnector.getService();;
 
 	String disease;
 	
 	public MedicalSupportAction() {
+		
 		laborators = new Vector<>();
 		for (int i = 0; i < ConstantMedical.LABORATOR_CATEGORY.length; i++) {
 			Laborator la   = new Laborator();
@@ -40,6 +42,7 @@ public class MedicalSupportAction  extends ActionSupport{
 	}
 	
 	public String Detect(){
+		
 		System.out.println("abc");
 		
 		try {
@@ -84,7 +87,7 @@ public class MedicalSupportAction  extends ActionSupport{
 	        System.out.println(data.classAttribute().value((int) pred));
 	        this.disease = data.classAttribute().value((int) pred);
 	        setAbNormalValue();
-	        this.nearLaboratorForms = rmiServer.findLaborator(disease, abNormals);
+	        this.nearLaboratorForms = RMIConnector.getService().findLaborator(disease, abNormals);
 	        
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,10 +96,11 @@ public class MedicalSupportAction  extends ActionSupport{
 	}
 	
 	public void setAbNormalValue() throws NumberFormatException, RemoteException{
+		
 		abNormals  = new Vector<>();
         for (int i = 0; i < laboratorValue.size(); i++) {	
         	if(laboratorValue.elementAt(i).length()>0){
-    			Laborator la = rmiServer.checkAbnormal(laboratorName.elementAt(i), Float.parseFloat(laboratorValue.elementAt(i)));
+    			Laborator la = RMIConnector.getService().checkAbnormal(laboratorName.elementAt(i), Float.parseFloat(laboratorValue.elementAt(i)));
     			if(la!=null){
     				abNormals.addElement(la);
     			}

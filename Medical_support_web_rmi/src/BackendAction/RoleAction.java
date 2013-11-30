@@ -7,6 +7,8 @@ import Model.Role;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import control.MedicalSupportInterface;
+
 public class RoleAction extends ActionSupport {
 
 	/**
@@ -20,11 +22,10 @@ public class RoleAction extends ActionSupport {
 	private String name = "";
 	private int id;
 	private Vector<String> selection = new Vector<String>();
-	MedicalSupportInterface rmiServer =  RMIConnector.getService();;
 
 	public String indexAction() throws RemoteException {
 		roles = new Vector<>();
-		roles = rmiServer.findRole(name);
+		roles = RMIConnector.getService().findRole(name);
 		if (this.roles.size() == 0) {
 			endIndex = -1;
 			return SUCCESS;
@@ -51,7 +52,7 @@ public class RoleAction extends ActionSupport {
 		if (roleBean == null) {
 			return ERROR;
 		}
-		if (rmiServer.newRole(roleBean)) {
+		if (RMIConnector.getService().newRole(roleBean)) {
 			addActionMessage("New item was created successfully!");
 			return SUCCESS;
 		} else {
@@ -60,14 +61,14 @@ public class RoleAction extends ActionSupport {
 	}
 
 	public String editAction() throws RemoteException {
-		roleBean = rmiServer.getRole(id);
+		roleBean = RMIConnector.getService().getRole(id);
 		if (roleBean != null)
 			return SUCCESS;
 		return ERROR;
 	}
 
 	public String saveAction() throws RemoteException {
-		if (rmiServer.saveRole(roleBean)) {
+		if (RMIConnector.getService().saveRole(roleBean)) {
 			addActionMessage("Item #" + roleBean.getId() + " was updated!");
 			return SUCCESS;
 		} else {
@@ -78,14 +79,14 @@ public class RoleAction extends ActionSupport {
 	public String deleteAction() throws RemoteException {
 
 		if (id != 0) {
-			if (rmiServer.deleteRole(id)) {
+			if (RMIConnector.getService().deleteRole(id)) {
 				addActionMessage("Item #" + id + " was deleted !");
 				return SUCCESS;
 			} else
 				return ERROR;
 		} else {
 			for (String s : selection) {
-				if (rmiServer.deleteRole(Integer.parseInt(s)))
+				if (RMIConnector.getService().deleteRole(Integer.parseInt(s)))
 					addActionMessage("Item #" + s + " was deleted !");
 				else
 					return ERROR;

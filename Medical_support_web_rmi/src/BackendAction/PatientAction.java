@@ -7,6 +7,8 @@ import Model.Patient;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import control.MedicalSupportInterface;
+
 public class PatientAction extends ActionSupport {
 	
 	/**
@@ -20,11 +22,11 @@ public class PatientAction extends ActionSupport {
 	private String name = "";
 	private String id = "";
 	private Vector<String> selection = new Vector<String>();
-	MedicalSupportInterface rmiServer =  RMIConnector.getService();;
 
 	public String indexAction() throws RemoteException {
+		
 		patients = new Vector<>();
-		patients = rmiServer.findPatient(name);
+		patients = RMIConnector.getService().findPatient(name);
 		
 		int size = this.patients.size();
 		
@@ -51,13 +53,15 @@ public class PatientAction extends ActionSupport {
 
 	
 	public String edit() throws RemoteException {
-		patientBean = rmiServer.getPatient(id);
+		
+		patientBean = RMIConnector.getService().getPatient(id);
 		if (patientBean != null)
 			return SUCCESS;
 		return ERROR;
 	}
 	public String save() throws RemoteException {
-		if(rmiServer.updatePatient(patientBean)){
+		
+		if(RMIConnector.getService().updatePatient(patientBean)){
 			return SUCCESS;		
 		}else{
 			System.out.println("update patient error");
@@ -66,10 +70,11 @@ public class PatientAction extends ActionSupport {
 		
 	}
 	public String newAction() throws RemoteException {
+		
 		if(patientBean==null){
 			return ERROR;
 		}
-		if(rmiServer.newPatient(patientBean)){
+		if(RMIConnector.getService().newPatient(patientBean)){
 			return SUCCESS;		
 		}else{
 			System.out.println("new patient error");
@@ -78,9 +83,9 @@ public class PatientAction extends ActionSupport {
 
 	}
 	public String delete() throws RemoteException {
-
+		
 		if (id.length() > 0) {
-			if(rmiServer.deletePatient(id)){
+			if(RMIConnector.getService().deletePatient(id)){
 				addActionMessage("Item #" + id + " was deleted !");
 				return SUCCESS;
 			}else{
@@ -88,7 +93,7 @@ public class PatientAction extends ActionSupport {
 			}
 		} else {
 			for (String s : selection) {
-				if (rmiServer.deletePatient(s)){
+				if (RMIConnector.getService().deletePatient(s)){
 					addActionMessage("Item #" + s + " was deleted !");
 				}else{
 					return ERROR;

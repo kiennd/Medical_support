@@ -10,9 +10,16 @@ public class MedicineForm implements Serializable {
 	private Medicine medicine;
 	private String description,patientid;
 	private int id,count,quantity;
-
+	private String unit;
 	
 	
+	
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
 	public int getCount() {
 		return count;
 	}

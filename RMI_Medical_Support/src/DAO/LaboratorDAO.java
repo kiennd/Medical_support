@@ -28,7 +28,7 @@ public class LaboratorDAO {
 			query.append("where patientid like '%" + name + "%' or ");
 			query.append("result like '%" + name + "%'");
 		}
-		query.append(" limit "+startIndex+",20");
+		query.append(" order by id limit "+startIndex+",20 ");
 		
 		System.out.println(query);
 
@@ -117,7 +117,7 @@ public class LaboratorDAO {
 		return r;
 	}
 	
-	public int getCount(){
+	public int getCountLaborator(){
 		String query = "select count(*) as c from tbllaborator";
 		PreparedStatement pr;
 		int count = 0;

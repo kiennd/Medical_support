@@ -3,7 +3,7 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="medicalSupport" namespace="/admin/medicalSupport" extends="struts-default">
+	<package name="medicalSupport" namespace="/medicalSupport" extends="struts-default">
 		<action name="index" class="BackendAction.MedicalSupportAction">
 			<result>index.jsp</result>
 		</action>

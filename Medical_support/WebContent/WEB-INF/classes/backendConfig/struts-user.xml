@@ -3,7 +3,7 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="user" namespace="/admin/user" extends="struts-default">
+	<package name="user" namespace="/user" extends="struts-default">
 		<action name="index" class="BackendAction.UserAction" method="execute">
 			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="store">

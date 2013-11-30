@@ -43,7 +43,7 @@ public class LaboratorAction extends ActionSupport {
 		endIndex = page * ITEM_PER_PAGE - 1;
 		
 		laboratorForms = ld.findLaborator(name, startIndex,endIndex );
-		
+		System.out.println(totalRecord);
 		int size = totalRecord;
 		if (size == 0) {
 			endIndex = -1;

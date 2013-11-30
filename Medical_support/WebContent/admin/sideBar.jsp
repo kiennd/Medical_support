@@ -6,13 +6,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <div id="sidebar">
+
 	<%
+	
 		User user = (User) session.getAttribute("user");
 		String name = "";
 		if (user == null) {
 			String redirectURL = request.getContextPath()
 					+ "/admin/login.jsp";
 			response.sendRedirect(redirectURL);
+			return;
 		} else {
 			name = user.getUsername();
 		}
@@ -43,7 +46,11 @@
 				class="nav-top-item no-submenu"> <!-- Add the class "no-submenu" to menu items with no sub menu -->
 					Medical support
 			</a></li>
-
+			<%
+				if(user.getRole().getId()==1){
+			%>
+			
+		
 			<li><a href="#" id="usermanager" class="nav-top-item"> User
 					management </a>
 				<ul>
@@ -54,7 +61,10 @@
 					<!-- Add class "current" to sub menu items also -->
 				</ul>
 			</li>
-			
+				<% 
+				}
+			%>
+
 			<li><a href="#" id="laboratormanagement" class="nav-top-item"> Laborator Management </a>
 				<ul>
 					<li><a id="patient"
@@ -67,7 +77,7 @@
 					<!-- Add class "current" to sub menu items also -->
 				</ul>
 			</li>
-			
+		
 
 
 		</ul>
@@ -81,10 +91,28 @@
 		document.getElementById("usermanager").setAttribute("class",
 				"nav-top-item current");
 	}
-	if (document.URL.toLowerCase().indexOf("/patient") >= 0) {
-		document.getElementById("user").setAttribute("class", "current");
+	if (document.URL.toLowerCase().indexOf("/role") >= 0) {
+		document.getElementById("role").setAttribute("class", "current");
 		document.getElementById("usermanager").setAttribute("class",
 				"nav-top-item current");
 	}
+	
+	if (document.URL.toLowerCase().indexOf("/patient") >= 0) {
+		document.getElementById("patient").setAttribute("class", "current");
+		document.getElementById("laboratormanagement").setAttribute("class",
+				"nav-top-item current");
+	}
+	
+	if (document.URL.toLowerCase().indexOf("/laborator") >= 0) {
+		document.getElementById("laborator").setAttribute("class", "current");
+		document.getElementById("laboratormanagement").setAttribute("class",
+				"nav-top-item current");
+	}
+	if (document.URL.toLowerCase().indexOf("/medicine") >= 0) {
+		document.getElementById("medicine").setAttribute("class", "current");
+		document.getElementById("laboratormanagement").setAttribute("class",
+				"nav-top-item current");
+	}
+	
 
 </script>

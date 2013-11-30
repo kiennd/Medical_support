@@ -1,7 +1,7 @@
 <%@page import="java.util.Vector"%>
 <%@page import="Model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -24,15 +24,23 @@
 		<%@include file="../sideBar.jsp"%>
 		<div id="main-content">
 			<!-- Main Content Section with everything -->
-			<%@include file = "../searchForm.jsp" %>
+			<%@include file="../searchForm.jsp"%>
 			<div class="clear"></div>
 			<!-- End .clear -->
 			<div class="content-box">
 				<!-- Start Content Box -->
 				<div class="content-box-header">
-					<h3>Content box</h3>
-					<a href="<%=request.getContextPath()%>/admin/patient/new" class="button"
-						style="margin-left: 70%; margin-top: 5px">New User</a>
+					<h3>Patient</h3>
+					<%
+						if (user.getRole().getId() == 1) {
+					%>
+
+					<a href="<%=request.getContextPath()%>/admin/patient/new"
+						class="button" style="margin-left: 70%; margin-top: 5px">New
+						User</a>
+					<%
+						}
+					%>
 				</div>
 
 				<div class="tab-content">
@@ -56,12 +64,19 @@
 									<th>Name</th>
 									<th>Born Year</th>
 									<th>Sex</th>
+									<%
+										if (user.getRole().getId() == 1) {
+									%>
+
 									<th>Modification</th>
+									<%
+										}
+									%>
 								</tr>
 							</thead>
 							<tbody>
-								<s:iterator value="patients" begin="startIndex"
-									end="endIndex" status="stat">
+								<s:iterator value="patients" begin="startIndex" end="endIndex"
+									status="stat">
 									<tr>
 										<td><input type="checkbox" name="slelect"
 											value=<s:property value = "id"/>></td>
@@ -74,6 +89,10 @@
 										<s:else>
 											<td>Nữ</td>
 										</s:else>
+										<%
+											if (user.getRole().getId() == 1) {
+										%>
+
 										<td>
 											<!-- Icons --> <a
 											href="<%=request.getContextPath()%>/admin/patient/edit?id=${id}"
@@ -81,18 +100,21 @@
 												src="../resources/images/icons/pencil.png" alt="Edit" /></a> <a
 											href="<%=request.getContextPath()%>/admin/patient/delete?id=${id}"
 											title="Delete"><img
-												src="../resources/images/icons/cross.png" alt="Delete" /></a>
-											<a
+												src="../resources/images/icons/cross.png" alt="Delete" /></a> <a
 											href="<%=request.getContextPath()%>/admin/laborator/newLaboratorForm?patientid=${id}"
 											title="Add new laborator form"><img
-												src="../resources/images/icons/Hospital.png" alt="Add new laborator form" /></a>
-											
+												src="../resources/images/icons/Hospital.png"
+												alt="Add new laborator form" /></a>
+
 										</td>
+										<%
+											}
+										%>
 									</tr>
 								</s:iterator>
 							</tbody>
 							<tfoot>
-								<%@include file = "../tableFooter.jsp" %>
+								<%@include file="../tableFooter.jsp"%>
 							</tfoot>
 						</table>
 					</s:form>

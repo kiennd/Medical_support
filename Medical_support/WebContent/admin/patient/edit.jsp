@@ -15,7 +15,14 @@
 		<!-- Wrapper for the radial gradient background -->
 
 		<%@include file="../sideBar.jsp"%>
-
+		<%
+			if(user.getRole().getId()!=1){
+				String redirectURL = request.getContextPath()
+						+ "/admin/index";
+				response.sendRedirect(redirectURL);
+				return;
+			}
+		%>
 		<div id="main-content">
 			<!-- Main Content Section with everything -->
 			<div class="clear"></div>

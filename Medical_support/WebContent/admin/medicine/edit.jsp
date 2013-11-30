@@ -15,7 +15,14 @@
 		<!-- Wrapper for the radial gradient background -->
 
 		<%@include file="../sideBar.jsp"%>
-
+		<%
+			if(user.getRole().getId()!=1){
+				String redirectURL = request.getContextPath()
+						+ "/admin/index";
+				response.sendRedirect(redirectURL);
+				return;
+			}
+		%>
 		<div id="main-content">
 			<!-- Main Content Section with everything -->
 			<div class="clear"></div>
@@ -37,8 +44,8 @@
 								cssClass="text-input medium-input"></s:textfield>
 						</p>
 						<p>
-							<s:textfield name="medicineBean.description" key="Medicine Description"
-								cssClass="text-input medium-input"></s:textfield>
+							<s:textarea id="tinyeditor" name="medicineBean.description" key="Medicine Description"
+								cssClass="text-input medium-input"></s:textarea>
 						</p>
 						
 						<p>

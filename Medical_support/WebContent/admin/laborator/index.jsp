@@ -32,10 +32,17 @@
 			<div class="content-box">
 				<!-- Start Content Box -->
 				<div class="content-box-header">
-					<h3>Content box</h3>
-					<a href="<%=request.getContextPath()%>/admin/laboratorForm/new"
+					<h3>Laborator Result</h3>
+					<%
+						if (user.getRole().getId() == 1) {
+					%>
+
+					<a href="<%=request.getContextPath()%>/admin/patient/index"
 						class="button" style="margin-left: 70%; margin-top: 5px">New
-						User</a>
+						Laborator Result</a>
+					<%
+						}
+					%>
 				</div>
 
 				<div class="tab-content">
@@ -60,7 +67,14 @@
 									<th>Time in hospital</th>
 									<th>Patient name</th>
 									<th>Result</th>
+									<%
+										if (user.getRole().getId() == 1) {
+									%>
+
 									<th>Modification</th>
+									<%
+										}
+									%>
 								</tr>
 							</thead>
 							<tbody>
@@ -81,9 +95,13 @@
 									<td><%=laboratorForm.getCount()%></td>
 									<td><%=laboratorForm.getPantient().getName()%></td>
 									<td><%=laboratorForm.getResult()%></td>
+									<%
+										if (user.getRole().getId() == 1) {
+									%>
+
 									<td>
 										<!-- Icons --> <a
-										href="<%=request.getContextPath()%>/admin/laborator/edit?patientid=<%=laboratorForm.getPantient().getId()%>&count=<%=laboratorForm.getCount() %>"
+										href="<%=request.getContextPath()%>/admin/laborator/edit?patientid=<%=laboratorForm.getPantient().getId()%>&count=<%=laboratorForm.getCount()%>"
 										title="Edit"><img
 											src="../resources/images/icons/pencil.png" alt="Edit" /></a> <a
 										href="<%=request.getContextPath()%>/admin/laborator/delete?id=<%=laboratorForm.getId()%>"
@@ -91,7 +109,9 @@
 											src="../resources/images/icons/cross.png" alt="Delete" /></a>
 									</td>
 								</tr>
-
+								<%
+									}
+								%>
 								<%
 									}
 								%>

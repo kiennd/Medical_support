@@ -3,11 +3,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <tr>
 	<td colspan="6">
+		<%
+			if(user.getRole().getId()==1){
+		%>
 		<div class="bulk-actions align-left">
 			<a class="button"
 				onclick="document.getElementById('form1').submit();">Delete
 				selected item</a>
 		</div>
+		<%
+			}
+		%>
 		<%
 			int pg = (Integer)request.getAttribute("page");
 			int totalPage = (Integer)request.getAttribute("totalPage");

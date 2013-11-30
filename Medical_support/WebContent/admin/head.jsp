@@ -64,5 +64,6 @@
 <script type="text/javascript"
 	src="../resources/scripts/jquery.jeditable.js"></script>
 	
-
+<link rel="stylesheet" href="../resources/css/tinyeditor.css">
+<script src="../resources/scripts/tiny.editor.packed.js"></script>
 		

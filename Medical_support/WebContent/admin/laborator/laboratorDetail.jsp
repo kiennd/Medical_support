@@ -47,9 +47,16 @@ $(document).ready(function() {
 	<div id="body-wrapper">
 		<!-- Wrapper for the radial gradient background -->
 		<%@include file="../sideBar.jsp"%>
+		<%
+			String className = "";
+			String clickToedit = "";
+			if(user.getRole().getId()==1){
+				className = "editable_tf";
+				clickToedit = " - Click value to edit";
+			}
+		%>
 		<div id="main-content">
 			<!-- Main Content Section with everything -->
-			<%@include file="../searchForm.jsp"%>
 			<div class="clear"></div>
 			<!-- End .clear -->
 			<p>
@@ -87,10 +94,8 @@ $(document).ready(function() {
 			<div class="content-box">
 				<!-- Start Content Box -->
 				<div class="content-box-header">
-					<h3>Laborator Table - Click to value to edit</h3>
-					<a href="<%=request.getContextPath()%>/admin/laboratorForm/new"
-						class="button" style="margin-left: 70%; margin-top: 5px">New
-						User</a>
+					<h3>Laborator Table<%=clickToedit %></h3>
+				
 				</div>
 
 				<div class="tab-content">
@@ -105,6 +110,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 					</s:if>
+
 					<s:form action="delete" id="form1">
 						<table>
 							<thead>
@@ -122,7 +128,7 @@ $(document).ready(function() {
 								%>
 								<tr>
 									<th><%=laborator.getName()%></th>
-									<th class = "editable_tf" id="<%=laborator.getName()%>"><%=laborator.getResult()%></th>
+									<th class = "<%=className%>" id="<%=laborator.getName()%>"><%=laborator.getResult()%></th>
 								</tr>
 								<%
 									}

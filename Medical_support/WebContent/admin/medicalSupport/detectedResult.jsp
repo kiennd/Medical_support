@@ -25,7 +25,6 @@
 		<%@include file="../sideBar.jsp"%>
 		<div id="main-content">
 			<!-- Main Content Section with everything -->
-			<%@include file="../searchForm.jsp"%>
 			<div class="clear"></div>
 			<!-- End .clear -->
 			<p>
@@ -33,14 +32,12 @@
 				String disease = (String)request.getAttribute("disease");
 				Vector<Laborator> abNormals =  (Vector<Laborator>)request.getAttribute("abNormals");
 			%>
-			<table>
-				<tr>
-					<th>Disease name</th>
-					<th><%=disease%></th>
-				</tr>
-			</table>
+
 			<p>
-				<b>Abnormal values</b>
+				<b>Disease name : 			<%=disease%></b>
+			</p>
+			<p>
+				<b>Abnormal values:</b>
 			</p>
 			
 			<table>

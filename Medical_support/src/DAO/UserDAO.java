@@ -15,7 +15,7 @@ public class UserDAO {
 	public boolean checkLogin(User user) {
 		conn = DBConnection.getConn();
 
-		String query = "select * from tbluser where username = ? and password = ? and roleid = 1";
+		String query = "select * from tbluser where username = ? and password = ?";
 		PreparedStatement pr;
 		try {
 
@@ -74,6 +74,40 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public User getUser(String username){
+		conn = DBConnection.getConn();
+		String query = "select * from tblUser as u "
+				+ "Inner join tblrole as r on u.roleid = r.id where u.username = '" + username
+				+ "' order by u.id";
+		java.sql.Statement st;
+		ResultSet rs = null;
+
+		User u = new User();
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+
+			if (rs.next()) {
+				u = new User();
+				u.setUsername(rs.getString("u.username"));
+				u.setId(rs.getInt("u.id"));
+				u.setPhonenumber(rs.getString("u.phoneNumber"));
+				u.setFullname(rs.getString("u.fullName"));
+				
+				Role r = new Role();
+				r.setDescription(rs.getString("r.description"));
+				r.setRole(rs.getString("r.role"));
+				r.setId(rs.getInt("r.id"));
+				
+				u.setRole(r);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return u;
 	}
 
 	public User getUser(int id) {

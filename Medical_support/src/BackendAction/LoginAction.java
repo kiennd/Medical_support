@@ -20,6 +20,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 			return "input";
 		}
 		if (ud.checkLogin(userBean)) {
+			userBean = ud.getUser(userBean.getUsername());
 			session.put("user", userBean);
 			return "success";
 		} else {
@@ -27,12 +28,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 			return "input";
 		}
 	}
-	
-	public String logout() throws Exception {
-//		Map<String,Object> session = ActionContext.getContext().getSession();
-		session.remove("user");
-		return SUCCESS;
-	}
+
 	
 	public void validate() {
 		System.out.println(userBean.getUsername());

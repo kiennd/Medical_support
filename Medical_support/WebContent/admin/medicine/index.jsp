@@ -31,8 +31,13 @@
 				<!-- Start Content Box -->
 				<div class="content-box-header">
 					<h3>Content box</h3>
+								<%
+				if(user.getRole().getId()==1){
+			%>
+			
 					<a href="<%=request.getContextPath()%>/admin/medicine/new" class="button"
 						style="margin-left: 70%; margin-top: 5px">New User</a>
+						<%} %>
 				</div>
 
 				<div class="tab-content">
@@ -55,7 +60,12 @@
 									<th>#</th>
 									<th>Name</th>
 									<th>Description</th>
+												<%
+				if(user.getRole().getId()==1){
+			%>
+			
 									<th>Modification</th>
+									<%} %>
 								</tr>
 							</thead>
 							<tbody>
@@ -67,6 +77,10 @@
 										<td>${id}</td>
 										<td>${name}</td>
 										<td>${description}</td>
+													<%
+				if(user.getRole().getId()==1){
+			%>
+			
 										<td>
 											<!-- Icons --> <a
 											href="<%=request.getContextPath()%>/admin/medicine/edit?id=${id}"
@@ -76,6 +90,7 @@
 											title="Delete"><img
 												src="../resources/images/icons/cross.png" alt="Delete" /></a>
 										</td>
+										<%} %>
 									</tr>
 								</s:iterator>
 							</tbody>

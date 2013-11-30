@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
 
-import DAO.UserDAO;
 import Model.User;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -13,14 +12,14 @@ public class LoginAction extends ActionSupport implements SessionAware{
 	private static final long serialVersionUID = 2L;
 	private User userBean;
 	private Map<String, Object> session;
+	MedicalSupportInterface rmiServer =  RMIConnector.getService();;
 
 	public String execute() throws Exception {
-		UserDAO ud = new UserDAO();
 		if(userBean == null){
 			return "input";
 		}
-		if (ud.checkLogin(userBean)) {
-			userBean = ud.getUser(userBean.getUsername());
+		if (rmiServer.checkLogin(userBean)) {
+			userBean = rmiServer.getUser(userBean.getUsername());
 			session.put("user", userBean);
 			return "success";
 		} else {

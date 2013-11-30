@@ -350,6 +350,10 @@ public class MedicalRMIControl extends UnicastRemoteObject implements
 		return userdao.newUser(user);
 	}
 	
+
+	public boolean saveUser(User user) throws RemoteException {
+		return userdao.saveUser(user);
+	}
 	
 	public static void main(String[] args) {
 		RmiMedicalView view = new RmiMedicalView();
@@ -360,5 +364,7 @@ public class MedicalRMIControl extends UnicastRemoteObject implements
 			e.printStackTrace();
 		}
 	}
+
+
 
 }

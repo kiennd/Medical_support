@@ -1,9 +1,9 @@
 package BackendAction;
 
+import java.rmi.RemoteException;
 import java.util.Vector;
 
-import DAO.*;
-import Model.*;
+import Model.Medicine;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -20,13 +20,13 @@ public class MedicineAction extends ActionSupport {
 	private String name = "";
 	private int id;
 	private Vector<String> selection = new Vector<String>();
+	MedicalSupportInterface rmiServer =  RMIConnector.getService();;
 
 	
 
-	public String indexAction() {
+	public String indexAction() throws RemoteException {
 		medicines = new Vector<>();
-		MedicineDAO md = new MedicineDAO();
-		medicines = md.findMedicine(name);
+		medicines = rmiServer.findMedicine(name);
 		
 		int size = this.medicines.size();
 		
@@ -52,16 +52,14 @@ public class MedicineAction extends ActionSupport {
 	}
 
 	
-	public String edit() {
-		MedicineDAO md = new MedicineDAO();
-		medicineBean = md.getMedicine(id);
+	public String edit() throws RemoteException {
+		medicineBean = rmiServer.getMedicine(id);
 		if (medicineBean != null)
 			return SUCCESS;
 		return ERROR;
 	}
-	public String save() {
-		MedicineDAO md = new MedicineDAO();
-		if(md.updateMedicine(medicineBean)){
+	public String save() throws RemoteException {
+		if(rmiServer.updateMedicine(medicineBean)){
 			return SUCCESS;		
 		}else{
 			System.out.println("update medicine error");
@@ -69,12 +67,11 @@ public class MedicineAction extends ActionSupport {
 		}
 		
 	}
-	public String newAction() {
+	public String newAction() throws RemoteException {
 		if(medicineBean==null){
 			return ERROR;
 		}
-		MedicineDAO md = new MedicineDAO();
-		if(md.newMedicine(medicineBean)){
+		if(rmiServer.newMedicine(medicineBean)){
 			return SUCCESS;		
 		}else{
 			System.out.println("new medicine error");
@@ -82,11 +79,10 @@ public class MedicineAction extends ActionSupport {
 		}
 
 	}
-	public String delete() {
-		MedicineDAO md = new MedicineDAO();
+	public String delete() throws NumberFormatException, RemoteException {
 
 		if (id!= 0) {
-			if(md.deleteMedicine(id)){
+			if(rmiServer.deleteMedicine(id)){
 				addActionMessage("Item #" + id + " was deleted !");
 				return SUCCESS;
 			}else{
@@ -94,7 +90,7 @@ public class MedicineAction extends ActionSupport {
 			}
 		} else {
 			for (String s : selection) {
-				if (md.deleteMedicine(Integer.parseInt(s))){
+				if (rmiServer.deleteMedicine(Integer.parseInt(s))){
 					addActionMessage("Item #" + s + " was deleted !");
 				}else{
 					return ERROR;

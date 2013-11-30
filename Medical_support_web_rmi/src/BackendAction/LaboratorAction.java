@@ -1,9 +1,8 @@
 package BackendAction;
 
-import java.util.*;
+import java.rmi.RemoteException;
+import java.util.Vector;
 
-import DAO.LaboratorDAO;
-import DAO.PatientDAO;
 import Model.Laborator;
 import Model.LaboratorForm;
 import Model.Patient;
@@ -29,20 +28,22 @@ public class LaboratorAction extends ActionSupport {
 	private Vector<Laborator> laborators;
 	private LaboratorForm laboratorFormBean;
 	private Patient currentPatient;
+	MedicalSupportInterface rmiServer =  RMIConnector.getService();;
+
+	
 	public String addPatient(){
 		return SUCCESS;
 	}
 	
-	public String indexAction(){
-		LaboratorDAO ld = new LaboratorDAO();
-		int totalRecord = ld.getCountLaborator();
+	public String indexAction() throws RemoteException{
+		int totalRecord = rmiServer.getCountLaborator();
 		if (page <= 0) {
 			page = 1;
 		}
 		startIndex = (page - 1) * ITEM_PER_PAGE;
 		endIndex = page * ITEM_PER_PAGE - 1;
 		
-		laboratorForms = ld.findLaborator(name, startIndex,endIndex );
+		laboratorForms = rmiServer.findLaborator(name, startIndex,endIndex );
 		System.out.println(totalRecord);
 		int size = totalRecord;
 		if (size == 0) {
@@ -59,39 +60,31 @@ public class LaboratorAction extends ActionSupport {
 	}
 
 	
-	public String detailAction(){
-		LaboratorDAO ld = new LaboratorDAO();
-		this.laborators = ld.getLaborators(patientid, count);
-		PatientDAO pd  = new PatientDAO();
-		currentPatient = pd.getPatient(patientid);
+	public String detailAction() throws RemoteException{
+		this.laborators = rmiServer.getLaborators(patientid, count);
+		currentPatient = rmiServer.getPatient(patientid);
 		
 		return SUCCESS;
 	}
 	
 	
-	public String saveLaborator(){
-		LaboratorDAO ld = new LaboratorDAO();
-		ld.saveLaborator(patientid, count, laboratorValue, laboratorName);
-		
+	public String saveLaborator() throws RemoteException{
+		rmiServer.saveLaborator(patientid, count, laboratorValue, laboratorName);
 		return SUCCESS;
 	}
 	
-	public String viewLaboratorForm(){
-		LaboratorDAO ld = new LaboratorDAO();
-		laboratorFormBean = ld.getLaboratorForm(patientid, count);
+	public String viewLaboratorForm() throws RemoteException{
+		laboratorFormBean = rmiServer.getLaboratorForm(patientid, count);
 		return SUCCESS;
 	}
 	
-	public String saveLaboratorForm(){
-		LaboratorDAO ld = new LaboratorDAO();
-		ld.saveLaboratorForm(laboratorFormBean);
+	public String saveLaboratorForm() throws RemoteException{
+		rmiServer.saveLaboratorForm(laboratorFormBean);
 		return SUCCESS;
 	}
 	
-	public String saveNewLaboratorForm(){
-		LaboratorDAO ld = new LaboratorDAO();
-		
-		ld.saveNewLaboratorForm(laboratorFormBean);
+	public String saveNewLaboratorForm() throws RemoteException{
+		rmiServer.saveNewLaboratorForm(laboratorFormBean);
 		
 		return SUCCESS;
 		

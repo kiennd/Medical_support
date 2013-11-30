@@ -1,9 +1,9 @@
 package BackendAction;
 
+import java.rmi.RemoteException;
 import java.util.Vector;
 
-import DAO.*;
-import Model.*;
+import Model.Patient;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -20,11 +20,11 @@ public class PatientAction extends ActionSupport {
 	private String name = "";
 	private String id = "";
 	private Vector<String> selection = new Vector<String>();
+	MedicalSupportInterface rmiServer =  RMIConnector.getService();;
 
-	public String indexAction() {
+	public String indexAction() throws RemoteException {
 		patients = new Vector<>();
-		PatientDAO md = new PatientDAO();
-		patients = md.findPatient(name);
+		patients = rmiServer.findPatient(name);
 		
 		int size = this.patients.size();
 		
@@ -50,16 +50,14 @@ public class PatientAction extends ActionSupport {
 	}
 
 	
-	public String edit() {
-		PatientDAO md = new PatientDAO();
-		patientBean = md.getPatient(id);
+	public String edit() throws RemoteException {
+		patientBean = rmiServer.getPatient(id);
 		if (patientBean != null)
 			return SUCCESS;
 		return ERROR;
 	}
-	public String save() {
-		PatientDAO md = new PatientDAO();
-		if(md.updatePatient(patientBean)){
+	public String save() throws RemoteException {
+		if(rmiServer.updatePatient(patientBean)){
 			return SUCCESS;		
 		}else{
 			System.out.println("update patient error");
@@ -67,12 +65,11 @@ public class PatientAction extends ActionSupport {
 		}
 		
 	}
-	public String newAction() {
+	public String newAction() throws RemoteException {
 		if(patientBean==null){
 			return ERROR;
 		}
-		PatientDAO md = new PatientDAO();
-		if(md.newPatient(patientBean)){
+		if(rmiServer.newPatient(patientBean)){
 			return SUCCESS;		
 		}else{
 			System.out.println("new patient error");
@@ -80,11 +77,10 @@ public class PatientAction extends ActionSupport {
 		}
 
 	}
-	public String delete() {
-		PatientDAO md = new PatientDAO();
+	public String delete() throws RemoteException {
 
 		if (id.length() > 0) {
-			if(md.deletePatient(id)){
+			if(rmiServer.deletePatient(id)){
 				addActionMessage("Item #" + id + " was deleted !");
 				return SUCCESS;
 			}else{
@@ -92,7 +88,7 @@ public class PatientAction extends ActionSupport {
 			}
 		} else {
 			for (String s : selection) {
-				if (md.deletePatient(s)){
+				if (rmiServer.deletePatient(s)){
 					addActionMessage("Item #" + s + " was deleted !");
 				}else{
 					return ERROR;

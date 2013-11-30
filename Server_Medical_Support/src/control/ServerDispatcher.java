@@ -15,10 +15,7 @@ public class ServerDispatcher extends Thread {
 
 	Vector<ClientInfo> clientList;
 	Vector<Message> messageQueue;
-	Registry registry;
 	MedicalSupportInterface rmiServer;
-
-	Connection con;
 
 	public ServerDispatcher() {
 		rmiServer = RMIConnector.getService();

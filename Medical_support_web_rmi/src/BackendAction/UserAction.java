@@ -4,8 +4,6 @@ import java.util.Vector;
 
 import Model.Role;
 import Model.User;
-import DAO.RoleDAO;
-import DAO.UserDAO;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -23,14 +21,14 @@ public class UserAction extends ActionSupport {
 	private String confirmPassword;
 	private Vector<String> selection = new Vector<String>();
 	private Vector<Role> roles = new Vector<>();
+	MedicalSupportInterface rmiServer =  RMIConnector.getService();;
 
 	public UserAction() {
 	}
 
 	@Override
 	public String execute() throws Exception {
-		UserDAO ud = new UserDAO();
-		this.userList = ud.findUser(name);
+		this.userList = rmiServer.findUser(name);
 		totalPage = userList.size() / ITEM_PER_PAGE;
 
 		if (this.userList.size() == 0) {
@@ -57,32 +55,28 @@ public class UserAction extends ActionSupport {
 	}
 
 	public String edit() throws Exception {
-		UserDAO ud = new UserDAO();
-		this.userBean = ud.getUser(id);
-		RoleDAO rd = new RoleDAO();
-		roles = rd.findRole("");
+		this.userBean = rmiServer.getUser(id);
+		roles = rmiServer.findRole("");
 		return SUCCESS;
 	}
 
 	public String saveUser() throws Exception {
-		UserDAO ud = new UserDAO();
-		if (ud.saveUser(userBean))
+		if (rmiServer.saveUser(userBean))
 			return SUCCESS;
 		else
 			return ERROR;
 	}
 
 	public String deleteUser() throws Exception {
-		UserDAO ud = new UserDAO();
 		if (id != 0) {
-			if (ud.deleteUser(id)) {
+			if (rmiServer.deleteUser(id)) {
 				addActionMessage("Item #" + id + " was deleted!");
 				return SUCCESS;
 			} else
 				return ERROR;
 		} else {
 			for (String s : selection) {
-				if (ud.deleteUser(Integer.parseInt(s)))
+				if (rmiServer.deleteUser(Integer.parseInt(s)))
 					addActionMessage("Item #" + s + " was deleted !");
 				else
 					return ERROR;
@@ -93,14 +87,12 @@ public class UserAction extends ActionSupport {
 
 	public String newUser() throws Exception {
 		if (userBean == null) {
-			RoleDAO rd = new RoleDAO();
-			roles = rd.findRole("");
+			roles = rmiServer.findRole("");
 
 			return ERROR;
 		}
 		if (confirmPassword.equals(userBean.getPassword())) {
-			UserDAO ud = new UserDAO();
-			if (ud.newUser(userBean)) {
+			if (rmiServer.newUser(userBean)) {
 				addActionMessage("One item has been created successfully.");
 				return SUCCESS;
 			} else {

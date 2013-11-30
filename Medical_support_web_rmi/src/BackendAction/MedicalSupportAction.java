@@ -1,5 +1,6 @@
 package BackendAction;
 
+import java.rmi.RemoteException;
 import java.util.Vector;
 
 import weka.classifiers.meta.FilteredClassifier;
@@ -7,7 +8,6 @@ import weka.classifiers.trees.J48;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.experiment.InstanceQuery;
-import DAO.LaboratorDAO;
 import Model.ConstantMedical;
 import Model.Laborator;
 import Model.LaboratorForm;
@@ -26,7 +26,8 @@ public class MedicalSupportAction  extends ActionSupport{
 	Vector<String> laboratorValue = new Vector<>();
 	Vector<Laborator> abNormals;
 	Vector<LaboratorForm> nearLaboratorForms;
-	
+	MedicalSupportInterface rmiServer =  RMIConnector.getService();;
+
 	String disease;
 	
 	public MedicalSupportAction() {
@@ -83,8 +84,7 @@ public class MedicalSupportAction  extends ActionSupport{
 	        System.out.println(data.classAttribute().value((int) pred));
 	        this.disease = data.classAttribute().value((int) pred);
 	        setAbNormalValue();
-	        LaboratorDAO ld = new LaboratorDAO();
-	        this.nearLaboratorForms = ld.findLaborator(disease, abNormals);
+	        this.nearLaboratorForms = rmiServer.findLaborator(disease, abNormals);
 	        
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,12 +92,11 @@ public class MedicalSupportAction  extends ActionSupport{
 		return SUCCESS;
 	}
 	
-	public void setAbNormalValue(){
-		LaboratorDAO mpd = new LaboratorDAO();
+	public void setAbNormalValue() throws NumberFormatException, RemoteException{
 		abNormals  = new Vector<>();
         for (int i = 0; i < laboratorValue.size(); i++) {	
         	if(laboratorValue.elementAt(i).length()>0){
-    			Laborator la = mpd.checkAbnormal(laboratorName.elementAt(i), Float.parseFloat(laboratorValue.elementAt(i)));
+    			Laborator la = rmiServer.checkAbnormal(laboratorName.elementAt(i), Float.parseFloat(laboratorValue.elementAt(i)));
     			if(la!=null){
     				abNormals.addElement(la);
     			}

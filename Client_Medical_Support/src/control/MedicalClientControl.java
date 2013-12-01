@@ -21,7 +21,7 @@ import Model.Laborator;
 import Model.LaboratorForm;
 import Model.Message;
 import Model.User;
-
+ 
 public class MedicalClientControl { 
 	private User currentUser;
 	private Socket client;

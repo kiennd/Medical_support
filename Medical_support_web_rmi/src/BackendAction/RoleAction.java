@@ -7,8 +7,6 @@ import Model.Role;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import control.MedicalSupportInterface;
-
 public class RoleAction extends ActionSupport {
 
 	/**

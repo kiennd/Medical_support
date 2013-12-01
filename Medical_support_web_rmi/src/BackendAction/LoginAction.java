@@ -8,8 +8,6 @@ import Model.User;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import control.MedicalSupportInterface;
-
 public class LoginAction extends ActionSupport implements SessionAware{
 	private static final long serialVersionUID = 2L;
 	private User userBean;

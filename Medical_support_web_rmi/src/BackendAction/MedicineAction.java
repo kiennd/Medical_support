@@ -7,8 +7,6 @@ import Model.Medicine;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import control.MedicalSupportInterface;
-
 public class MedicineAction extends ActionSupport {
 	
 	/**

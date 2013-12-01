@@ -64,6 +64,7 @@ public class MedicalSupportAction  extends ActionSupport{
 			}else{
 				la.setResult(Float.NaN);
 			}
+			res.add(la);
 		}
 		return res;
 	}

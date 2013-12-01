@@ -91,20 +91,31 @@ public class MedicalRMIControl extends UnicastRemoteObject implements
 			System.out.println("load done : number instance "+data.numInstances());
 			
 	        Instance ins = data.instance(data.numInstances()-1);
-	        
+	        float choice = 0;
 	        for (int i = 0; i < laborators.size(); i++) {	
 	        	
 	        	if(!Float.isNaN(laborators.elementAt(i).getResult())){
 	        		float v = laborators.elementAt(i).getResult();
 	        		ins.setValue(ins.attribute(i), v);
+	        		choice+= v;
 	        	}else{
 	        		ins.setValue(ins.attribute(i), Instance.missingValue());
 	        	}
 			}
 	        
+
+	        
 	        System.out.println(ins);
-			
-			String disease = j48detect(data, ins);
+			String disease ;
+			disease = knndetect(data, ins,(int)choice);
+	        if((int)choice %2==0){
+	        	disease = j48detect(data, ins);
+	        }
+	        
+	        if((int)choice %3==0){
+	        	disease = navieDetect(data, ins);
+	        }
+	        
 	        DetectedResult dr = new DetectedResult();
 	        dr.setDisease(disease);
 	        dr.setAbNormals(getAbNormalValue(laborators));
@@ -115,7 +126,6 @@ public class MedicalRMIControl extends UnicastRemoteObject implements
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		
 		return null;
 	}
@@ -156,14 +166,14 @@ public class MedicalRMIControl extends UnicastRemoteObject implements
 		return data.classAttribute().value((int) pred);
 	}
 
-	public String knndetect(Instances data, Instance ins) throws Exception{
+	public String knndetect(Instances data, Instance ins, int total) throws Exception{
 
 		LinearNNSearch knn = new LinearNNSearch(
 				data);
 
-        Instances nearestInstances= knn.kNearestNeighbours(ins, 3);
+        Instances nearestInstances= knn.kNearestNeighbours(ins, 20);
 
-        return data.classAttribute().value((int) nearestInstances.instance(0).classValue());
+        return data.classAttribute().value((int) nearestInstances.instance(total%19).classValue());
 	
 	}
 	

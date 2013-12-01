@@ -12,5 +12,6 @@
 	<include file="backendConfig/struts-patient.xml"></include>
 	<include file="backendConfig/struts-laborator.xml"></include>
 	<include file="backendConfig/struts-medicalSupport.xml"></include>
+	<include file="backendConfig/struts-medicineForm.xml"></include>
 	
 </struts>

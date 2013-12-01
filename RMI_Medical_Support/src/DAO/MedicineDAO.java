@@ -68,7 +68,7 @@ public class MedicineDAO {
 		return r;
 	}
 	
-	public Vector<MedicineForm> getMedicineForms(String patientid, int count){
+	public Vector<MedicineForm> getMedicineFormss(String patientid, int count){
 		Vector<MedicineForm> medicineForms = new Vector<>();
 		String query = "select * from tblmedicineform where patientid = ? and count = ?";
 		try {

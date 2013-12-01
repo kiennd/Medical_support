@@ -14,6 +14,7 @@ import weka.core.Instances;
 import weka.experiment.InstanceQuery;
 import DAO.LaboratorDAO;
 import DAO.MedicineDAO;
+import DAO.MedicineFormDAO;
 import DAO.PatientDAO;
 import DAO.RoleDAO;
 import DAO.UserDAO;
@@ -43,7 +44,7 @@ public class MedicalRMIControl extends UnicastRemoteObject implements
 	private PatientDAO patientdao = new PatientDAO();
 	private MedicineDAO medicinedao = new MedicineDAO();
 	private LaboratorDAO laboratordao = new LaboratorDAO();
-	
+	private MedicineFormDAO medicineformdao = new MedicineFormDAO();
 	
 	public MedicalRMIControl(RmiMedicalView view) throws RemoteException {
 		this.view = view;
@@ -222,7 +223,7 @@ public class MedicalRMIControl extends UnicastRemoteObject implements
 	public Vector<MedicineForm> getMedicineForms(String patientid, int count)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		return medicinedao.getMedicineForms(patientid, count);
+		return medicinedao.getMedicineFormss(patientid, count);
 	}
 
 
@@ -363,6 +364,27 @@ public class MedicalRMIControl extends UnicastRemoteObject implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+
+	@Override
+	public Vector<MedicineForm> getMedicineFormss(String patientid, int count)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return medicineformdao.getMedicineForms(patientid, count);
+	}
+
+
+	@Override
+	public Vector<MedicineForm> findMedicineForm(String name, int startIndex)
+			throws RemoteException {
+		return medicineformdao.findMedicineForm(name, startIndex);
+	}
+
+
+	@Override
+	public int getCountMedicineForm() throws RemoteException {
+		return medicineformdao.getCountMedicineForm();
 	}
 
 

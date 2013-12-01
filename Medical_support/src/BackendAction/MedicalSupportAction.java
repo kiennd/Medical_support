@@ -26,7 +26,7 @@ public class MedicalSupportAction  extends ActionSupport{
 	Vector<String> laboratorValue = new Vector<>();
 	Vector<Laborator> abNormals;
 	Vector<LaboratorForm> nearLaboratorForms;
-	
+
 	String disease;
 	
 	public MedicalSupportAction() {
@@ -85,7 +85,7 @@ public class MedicalSupportAction  extends ActionSupport{
 	        setAbNormalValue();
 	        LaboratorDAO ld = new LaboratorDAO();
 	        this.nearLaboratorForms = ld.findLaborator(disease, abNormals);
-	        
+	       
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

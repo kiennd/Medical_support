@@ -28,7 +28,7 @@ public interface MedicalSupportInterface extends Remote {
 	// medicine:
 	public Vector<Medicine> findMedicine(String name) throws RemoteException;
 	public Medicine getMedicine(int id)  throws RemoteException;
-	public Vector<MedicineForm> getMedicineForms(String patientid, int count) throws RemoteException;
+	public Vector<MedicineForm> getMedicineFormss(String patientid, int count) throws RemoteException;
 	public boolean updateMedicine(Medicine medicine)  throws RemoteException;
 	public boolean newMedicine(Medicine medicine) throws RemoteException;
 	public boolean deleteMedicine(int id) throws RemoteException;
@@ -54,4 +54,10 @@ public interface MedicalSupportInterface extends Remote {
 	public boolean deleteUser(int id) throws RemoteException;
 	public boolean newUser(User user) throws RemoteException;
 	public boolean saveUser(User user) throws RemoteException;
+	
+	//medical form
+	public Vector<MedicineForm> findMedicineForm(String name, int startIndex)  throws RemoteException;
+	public Vector<MedicineForm> getMedicineForms(String patientid,int count)  throws RemoteException;
+	public int getCountMedicineForm()  throws RemoteException;
+	
 }

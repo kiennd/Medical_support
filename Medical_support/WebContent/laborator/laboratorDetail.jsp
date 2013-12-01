@@ -143,6 +143,70 @@ $(document).ready(function() {
 				<!-- End .content-box-content -->
 			</div>
 			<!-- End .content-box -->
+			<div class="content-box">
+				<!-- Start Content Box -->
+				<div class="content-box-header">
+					<h3>Medicine form</h3>
+				</div>
+
+			<div class="clear"></div>
+				<div class="tab-content">
+						<table>
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Patientid</th>
+									<th>Time</th>
+									<th>Medicine name</th>
+									<th>Quantity</th>
+									<th>Unit</th>
+									<th>Description</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<%
+								Vector<MedicineForm> medicineforms = (Vector<MedicineForm>)request.getAttribute("medicineforms");
+										for (MedicineForm medicineform : medicineforms) {
+								%>
+								<tr>
+									<td><%=medicineform.getId()%></td>
+									<td><%=medicineform.getPatientid()%></td>
+									<td><%=medicineform.getCount()%></td>
+									<td><%=medicineform.getMedicine().getName()%></td>
+									<td><%=medicineform.getQuantity()%></td>
+									<td><%=medicineform.getUnit()%></td>
+									<td><%=medicineform.getDescription()%></td>
+									
+
+									<%
+										if (user.getRole().getId() == 99) {
+									%>
+
+<%-- 									<td>
+										<!-- Icons --> <a
+										href="<%=request.getContextPath()%>/laborator/edit?patientid=<%=laboratorForm.getPantient().getId()%>&count=<%=laboratorForm.getCount()%>"
+										title="Edit"><img
+											src="../resources/images/icons/pencil.png" alt="Edit" /></a> <a
+										href="<%=request.getContextPath()%>/laborator/delete?id=<%=laboratorForm.getId()%>"
+										title="Delete"><img
+											src="../resources/images/icons/cross.png" alt="Delete" /></a>
+									</td> --%>
+								</tr>
+								<%
+									}
+								%>
+								<%
+									}
+								%>
+							</tbody>
+							
+						</table>
+				</div>
+				<!-- End .content-box-content -->
+			</div>
+			
+			
 			<s:include value="../footer.jsp"></s:include>
 		</div>
 		<!-- End #main-content -->

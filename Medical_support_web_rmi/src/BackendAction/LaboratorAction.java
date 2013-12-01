@@ -5,11 +5,10 @@ import java.util.Vector;
 
 import Model.Laborator;
 import Model.LaboratorForm;
+import Model.MedicineForm;
 import Model.Patient;
 
 import com.opensymphony.xwork2.ActionSupport;
-
-import control.MedicalSupportInterface;
 
 
 public class LaboratorAction extends ActionSupport {
@@ -30,7 +29,7 @@ public class LaboratorAction extends ActionSupport {
 	private Vector<Laborator> laborators;
 	private LaboratorForm laboratorFormBean;
 	private Patient currentPatient;
-
+	Vector<MedicineForm> medicineforms;
 
 	
 	public String addPatient(){
@@ -67,7 +66,7 @@ public class LaboratorAction extends ActionSupport {
 		
 		this.laborators = RMIConnector.getService().getLaborators(patientid, count);
 		currentPatient = RMIConnector.getService().getPatient(patientid);
-		
+		medicineforms = RMIConnector.getService().getMedicineForms(patientid, count);
 		return SUCCESS;
 	}
 	
@@ -208,6 +207,14 @@ public class LaboratorAction extends ActionSupport {
 			this.laboratorValue = laboratorValue;
 		}
 	}
-	
+
+	public Vector<MedicineForm> getMedicineforms() {
+		return medicineforms;
+	}
+
+	public void setMedicineforms(Vector<MedicineForm> medicineforms) {
+		this.medicineforms = medicineforms;
+	}
+	 
 	
 }

@@ -74,6 +74,9 @@
 					<li><a id="medicine"
 						href="<%=request.getContextPath()%>/medicine/index">Medicine</a></li>
 						
+					<li><a id="medicineform"
+						href="<%=request.getContextPath()%>/medicineform/index">Medicine Form</a></li>
+						
 					<!-- Add class "current" to sub menu items also -->
 				</ul>
 			</li>
@@ -108,8 +111,13 @@
 		document.getElementById("laboratormanagement").setAttribute("class",
 				"nav-top-item current");
 	}
-	if (document.URL.toLowerCase().indexOf("/medicine") >= 0) {
+	if (document.URL.toLowerCase().indexOf("/medicine/") >= 0) {
 		document.getElementById("medicine").setAttribute("class", "current");
+		document.getElementById("laboratormanagement").setAttribute("class",
+				"nav-top-item current");
+	}
+	if (document.URL.toLowerCase().indexOf("/medicineform") >= 0) {
+		document.getElementById("medicineform").setAttribute("class", "current");
 		document.getElementById("laboratormanagement").setAttribute("class",
 				"nav-top-item current");
 	}

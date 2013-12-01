@@ -13,7 +13,6 @@ public class MedicineForm implements Serializable {
 	private String unit;
 	
 	
-	
 	public String getUnit() {
 		return unit;
 	}

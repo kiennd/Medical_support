@@ -3,9 +3,11 @@ package BackendAction;
 import java.util.*;
 
 import DAO.LaboratorDAO;
+import DAO.MedicineFormDAO;
 import DAO.PatientDAO;
 import Model.Laborator;
 import Model.LaboratorForm;
+import Model.MedicineForm;
 import Model.Patient;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -29,6 +31,7 @@ public class LaboratorAction extends ActionSupport {
 	private Vector<Laborator> laborators;
 	private LaboratorForm laboratorFormBean;
 	private Patient currentPatient;
+	Vector<MedicineForm> medicineforms;
 	public String addPatient(){
 		return SUCCESS;
 	}
@@ -64,7 +67,8 @@ public class LaboratorAction extends ActionSupport {
 		this.laborators = ld.getLaborators(patientid, count);
 		PatientDAO pd  = new PatientDAO();
 		currentPatient = pd.getPatient(patientid);
-		
+		MedicineFormDAO mfd = new MedicineFormDAO();
+		medicineforms = mfd.getMedicineForms(patientid, count);
 		return SUCCESS;
 	}
 	
@@ -206,6 +210,14 @@ public class LaboratorAction extends ActionSupport {
 		}else{
 			this.laboratorValue = laboratorValue;
 		}
+	}
+
+	public Vector<MedicineForm> getMedicineforms() {
+		return medicineforms;
+	}
+
+	public void setMedicineforms(Vector<MedicineForm> medicineforms) {
+		this.medicineforms = medicineforms;
 	}
 	
 	

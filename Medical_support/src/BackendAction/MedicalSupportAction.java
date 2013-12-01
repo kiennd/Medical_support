@@ -53,17 +53,13 @@ public class MedicalSupportAction  extends ActionSupport{
 					+ " inner join tbllaboratorform on tbllaboratorform.patientid = tbllaborator.patientid"
 					+ "	and tbllaboratorform.count = tbllaborator.count"
 					+ " limit 2000");
-			
 			query.setQuery(q.toString());
 
 			Instances data = query.retrieveInstances();
 
 			data.setClassIndex(data.numAttributes() - 1); 
 			System.out.println("load done");
-			J48 j48 = new J48();
-	        FilteredClassifier fc = new FilteredClassifier();
-	        fc.setClassifier(j48);
-	        fc.buildClassifier(data);
+			
 	        Instance ins = data.instance(data.numInstances()-1);
 	        
 	        for (int i = 0; i < laboratorValue.size(); i++) {	
@@ -75,7 +71,13 @@ public class MedicalSupportAction  extends ActionSupport{
 	        		ins.setValue(ins.attribute(i), Instance.missingValue());
 	        	}
 			}
+	   
 	        System.out.println(ins);
+	        
+	        J48 j48 = new J48();
+	        FilteredClassifier fc = new FilteredClassifier();
+	        fc.setClassifier(j48);
+	        fc.buildClassifier(data);
 	        double pred = fc.classifyInstance(ins);
 	        System.out.println("pred= " + pred);
 	        System.out.println(". predicted value: "

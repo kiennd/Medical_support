@@ -27,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
 import Model.ConstantMedical;
 import Model.Laborator;
 import Model.LaboratorForm;
+import java.awt.event.ActionEvent;
 
 public class DetectView extends JFrame {
 
@@ -164,6 +165,17 @@ public class DetectView extends JFrame {
 		label.setBounds(6, 6, 869, 495);
 		Image image2 = img.getScaledInstance(label.getWidth(),
 				label.getHeight(), Image.SCALE_SMOOTH);
+		
+		JButton btnClear = new JButton("Clear");
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				for (JTextField tf : txtList) {
+					tf.setText("");
+				}
+			}
+		});
+		btnClear.setBounds(175, 443, 103, 31);
+		contentPane.add(btnClear);
 		label.setIcon(new ImageIcon(image2));
 
 		contentPane.add(label);
@@ -248,5 +260,4 @@ public class DetectView extends JFrame {
 	public void AddTableMouseListener(MouseListener ms) {
 		this.tblSimilarLaborator.addMouseListener(ms);
 	}
-
 }

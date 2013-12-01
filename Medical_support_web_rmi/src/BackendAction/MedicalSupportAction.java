@@ -3,18 +3,12 @@ package BackendAction;
 import java.rmi.RemoteException;
 import java.util.Vector;
 
-import weka.classifiers.meta.FilteredClassifier;
-import weka.classifiers.trees.J48;
-import weka.core.Instance;
-import weka.core.Instances;
-import weka.experiment.InstanceQuery;
 import Model.ConstantMedical;
+import Model.DetectedResult;
 import Model.Laborator;
 import Model.LaboratorForm;
 
 import com.opensymphony.xwork2.ActionSupport;
-
-import control.MedicalSupportInterface;
 
 
 public class MedicalSupportAction  extends ActionSupport{
@@ -46,48 +40,13 @@ public class MedicalSupportAction  extends ActionSupport{
 		System.out.println("abc");
 		
 		try {
-			InstanceQuery query = new InstanceQuery();
-			query.setUsername("root");
-			query.setPassword(" ");
-			StringBuffer q = new StringBuffer("select");
-			for (int i = 0; i < ConstantMedical.LABORATOR_CATEGORY.length; i++) {
-				q.append("`"+ConstantMedical.LABORATOR_CATEGORY[i]+"`,");
-			}
-			q.append("`result` from tbllaborator"
-					+ " inner join tbllaboratorform on tbllaboratorform.patientid = tbllaborator.patientid"
-					+ "	and tbllaboratorform.count = tbllaborator.count"
-					+ " limit 2000");
+			DetectedResult dr = new DetectedResult();
 			
-			query.setQuery(q.toString());
-
-			Instances data = query.retrieveInstances();
-
-			data.setClassIndex(data.numAttributes() - 1); 
-			System.out.println("load done");
-			J48 j48 = new J48();
-	        FilteredClassifier fc = new FilteredClassifier();
-	        fc.setClassifier(j48);
-	        fc.buildClassifier(data);
-	        Instance ins = data.instance(data.numInstances()-1);
-	        
-	        for (int i = 0; i < laboratorValue.size(); i++) {	
-	        	String v = "?";
-	        	if(laboratorValue.elementAt(i).length()>0){
-	        		v = laboratorValue.elementAt(i);
-	        		ins.setValue(ins.attribute(i), Double.parseDouble(v));
-	        	}else{
-	        		ins.setValue(ins.attribute(i), Instance.missingValue());
-	        	}
-			}
-	        System.out.println(ins);
-	        double pred = fc.classifyInstance(ins);
-	        System.out.println("pred= " + pred);
-	        System.out.println(". predicted value: "
-	                + data.classAttribute().value((int) pred));
-	        System.out.println(data.classAttribute().value((int) pred));
-	        this.disease = data.classAttribute().value((int) pred);
-	        setAbNormalValue();
-	        this.nearLaboratorForms = RMIConnector.getService().findLaborator(disease, abNormals);
+			laborators = generateLaborators();
+			dr =  RMIConnector.getService().detectDisease(laborators);
+	        this.disease = dr.getDisease();
+	        this.abNormals = dr.getAbNormals();
+	        this.nearLaboratorForms = dr.getNearLaboratorForms();
 	        
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -95,19 +54,21 @@ public class MedicalSupportAction  extends ActionSupport{
 		return SUCCESS;
 	}
 	
-	public void setAbNormalValue() throws NumberFormatException, RemoteException{
-		
-		abNormals  = new Vector<>();
-        for (int i = 0; i < laboratorValue.size(); i++) {	
-        	if(laboratorValue.elementAt(i).length()>0){
-    			Laborator la = RMIConnector.getService().checkAbnormal(laboratorName.elementAt(i), Float.parseFloat(laboratorValue.elementAt(i)));
-    			if(la!=null){
-    				abNormals.addElement(la);
-    			}
-        		
-        	}
+	public Vector<Laborator> generateLaborators(){
+		Vector<Laborator> res = new Vector<>();
+		for (int i = 0; i < laboratorValue.size(); i++) {
+			Laborator la = new Laborator();
+			la.setName(laboratorName.get(i));
+			if(laboratorValue.get(i).length()>0){
+				la.setResult(Float.parseFloat(laboratorValue.get(i)));
+			}else{
+				la.setResult(Float.NaN);
+			}
 		}
+		return res;
 	}
+	
+
 	
 	
 	public float valueWithName(String name){

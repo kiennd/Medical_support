@@ -22,7 +22,7 @@ import Model.LaboratorForm;
 import Model.Message;
 import Model.User;
 
-public class MedicalClientControl {
+public class MedicalClientControl { 
 	private User currentUser;
 	private Socket client;
 	private ObjectInputStream ois = null;
